@@ -1,0 +1,66 @@
+<!-- <div class="col-md-12">
+  <div class="row">
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-6"> -->
+        <!-- <nb-card>
+           <nb-card-header *ngIf="status=='Credit'" style="background-color: green; text-align: center;">Transaction Status</nb-card-header>
+           <nb-card-header *ngIf="status!='Credit'" style="background-color: red; text-align: center;">Transaction Status</nb-card-header>
+           <nb-card-body>
+              <toaster-container [toasterconfig]="config"></toaster-container>
+              <div class="row">
+                 <div class="col-md-8">
+                    <a>Please Do Not Refresh the Page</a><br>
+                    &nbsp;
+                    <table class="table table-bordered table-hover table-striped">
+                       <tr *ngIf="msg!=''">
+                          <th>Status</th>
+                          <td><b>{{msg ? msg:''}}</b></td>
+                       </tr>
+                       <tr>
+                          <th>Transaction ID</th>
+                          <td><b>{{txnid ? txnid : ''}}</b></td>
+                       </tr>
+                       <th>Order ID</th>
+                       <td><b>{{orderid ? orderid : ''}}</b></td>
+                    </table>
+                 </div>
+              </div>
+              <div class="modal-footer">
+                 <button type="submit" class="btn btn-sm btn-success" (click)="redirect()">Redirect</button>
+              </div>
+           </nb-card-body>
+        </nb-card> -->
+        <div class="container">
+         <div class="row">
+            <div class="col-md-6 mx-auto mt-5">
+               <div class="payment">
+                  <div class="payment_header" [ngStyle]="{'background-color': (status ==='Credit') ? 'rgb(75,181,67)' : 'rgba(255,102,0,1)'}">
+                     <div class="check" *ngIf="status ==='Credit'"><i class="fa fa-check" aria-hidden="true"></i></div>
+                     <div class="check" *ngIf="status !='Credit'"><i class="fa fa-times" aria-hidden="true"></i></div>
+                  </div>
+                  <div class="content" >
+                     <h1 *ngIf="status==='Credit'">Payment Success !</h1>
+                     <h1 *ngIf="status!='Credit'">Payment Failure !</h1>
+
+                     <p><b>Please Do Not Refresh the Page</b></p><br>
+                     <!-- &nbsp; -->
+                        <ul style="list-style: none;">
+                           <li style="color:darkblue"><b>Status: {{msg ? msg:'--'}}</b></li><br>
+                           <li style="color:darkblue"><b>Transaction ID: {{txnid ? txnid : '--'}}</b></li><br>
+                           <li style="color:darkblue"><b>Order ID: {{orderid ? orderid : '--'}}</b></li>
+                        </ul>
+                      <a  [ngStyle]="{'background-color': (status=='Credit') ? 'rgb(75,181,67)' : 'rgba(255,102,0,1)'}" href="#/pages/iot-dashboard">Go to Home</a>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+
+<!-- 
+
+     </div>
+  </div>
+
+</div> -->

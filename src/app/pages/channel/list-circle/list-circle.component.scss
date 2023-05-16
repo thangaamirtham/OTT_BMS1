@@ -1,0 +1,35 @@
+.table-wrapper {
+  overflow-y: scroll;
+  height: auto;
+}
+
+.table-wrapper th {
+  position: sticky;
+  top: -1px;
+}
+
+.table-wrapper {
+  background: white;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background: #2a72be;
+}
+
+td,
+th {
+  padding: 6px;
+  text-align: center;
+}
+
+.table td {
+  white-space: nowrap;
+}
+.table th {
+  white-space: nowrap;
+}

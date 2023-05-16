@@ -1,0 +1,131 @@
+<nb-card>
+  <nb-card-header>LIST DEPOSIT
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i
+        class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]="config"></toaster-container>
+    <button class="btn btn-sm btn-success" [routerLink]="['/pages/account/deposit']">Add</button>
+    <hr style="border: 0px;">
+    <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3" *ngIf="role.getroleid()>777">
+          <label>Select Role</label>
+          <select [(ngModel)]="role_type" class="form-control" (change)="showUser();company='';">
+            <option value="" selected>Select Role</option>
+            <option value="777">Distibutor</option>
+            <option value="666">Sub-Distributor</option>
+            <option value="555">Reseller</option>
+
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Company</label>
+          <auto-completen [(ngModel)]="company" addclass="form-control" optValues="bname"
+            placeholder='Select Business Name' (keyUp)="showUser($event)" optId="mid" [item]="bname">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Deposit Amount</label>
+          <input type="number" [(ngModel)]="dep_amt" class="form-control" placeholder="Deposited Amount">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>Start Date</label>
+          <input type="date" pattern="Start Date" [(ngModel)]="start_date" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label>End Date</label>
+          <input type="date" placeholder="End Date" [(ngModel)]="end_date" class="form-control">
+        </div>
+      </div>
+      <button type="button" class="btn btn-md btn-success" (click)='initialList();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+    <toaster-container [toasterconfig]></toaster-container>
+    <!-- <label class="left">
+      <h5>Total Count : {{count}}</h5>
+    </label> -->
+    <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+
+    <table class="table table-bordered table-striped">
+      <thead class="success">
+        <th style="text-align:left;color:white"><b>Total records : {{count}}</b></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;font-weight:800;"> TOTAL DEPOSIT AMOUNT :</td>
+        </tr>
+        <tr>
+          <td style="text-align: left;font-size: x-large;font-weight:600;">&nbsp;{{ totamount || 0 | currency :
+            'INR': 'symbol' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+
+
+    <table class="table table-bordered table-striped" id="myTable">
+      <tr style="background-color : #01a7ee;color:white;font-size: medium;">
+        <!-- <th *ngIf="role.getmenurole(1030)">Action</th> -->
+        <th *ngIf="role.getroleid()>777">ID</th>
+        <th *ngIf="role.getroleid()>777">RESELLER TYPE </th>
+        <th *ngIf="role.getroleid()>777">RESELLER NAME </th>
+        <th>DEPOSIT TYPE</th>
+        <th>ORDERID</th>
+        <th>DEPOSIT AMOUNT</th>
+        <th>STATUS</th>
+        <!-- <th>REASON	</th> -->
+        <th>REMARKS</th>
+        <th>DEPOSITED BY</th>
+        <th>DEPOSIT DATE
+        </th>
+      </tr>
+      <tr *ngFor="let item of pagedItems">
+        <td *ngIf="role.getroleid()>777">{{ item.id}}</td>
+        <td *ngIf="role.getroleid()>777">{{item.role ==777? 'Distributor': item.role ==666? 'Sub-Distributor':
+          'Reseller'}}</td>
+        <td *ngIf="role.getroleid()>777">{{item.bname}}</td>
+        <td>{{item.deposit_type == 1? 'Deposit':item.deposit_type == 2? 'Debit': item.deposit_type ==3? 'Reseller Online Topup': '--'}}</td>
+        <td>{{item.txnid}}</td>
+        <td style="font-weight:900;text-align: center;">{{item.deposit_amount | currency : 'INR': 'symbol'}}</td>
+        <td>{{item.status ==0? 'Active': 'Cancelled'}}</td>
+        <td>{{item.reason || '--'}}</td>
+        <td>{{item.deposited_by}}</td>
+        <td>{{ item.cdate | date: 'dd MMM yyyy hh:mm:ss'}}</td>
+      </tr>
+      <tr>
+        <td colspan="4" *ngIf="pagedItems==''">NO DATA FOUND</td>
+      </tr>
+    </table>
+    <br>
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>

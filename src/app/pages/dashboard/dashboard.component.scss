@@ -1,0 +1,87 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .solar-card nb-card-header {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  @include media-breakpoint-down(sm) {
+    ngx-traffic {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    /deep/ nb-card.large-card {
+      height: nb-theme(card-height-medium);
+    }
+  }
+  @include nb-install-component() {
+  
+    ngx-barcharts,
+  
+   
+
+  /deep/ .echart {
+    height: 100%;
+    width: 100%;
+  }
+}
+ .user-activity-list li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    color: nb-theme(color-fg);
+    padding: nb-theme(card-padding);
+    border-bottom:
+      nb-theme(list-item-border-width)
+      nb-theme(card-header-border-type)
+      nb-theme(separator);
+
+    &:first-child {
+      border-top:
+        nb-theme(list-item-border-width)
+        nb-theme(card-header-border-type)
+        nb-theme(separator);
+    }
+
+    &:hover {
+      background-color: nb-theme(layout-bg);
+
+      &::before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 6px;
+        left: 0;
+        top: 0;
+        background-color: nb-theme(color-success);
+        border-radius: nb-theme(radius);
+      }
+    }
+  }
+
+.adapted { background-color: rgba(10,5,8,0) }
+
+}
+
+.table-wrapper{
+  overflow-y: scroll;
+  height: auto;
+}
+
+.table-wrapper th{
+    position: sticky;
+    top: -1px;
+}
+
+.bg-gradient{
+  background-image: linear-gradient(to right, rgb(25, 176, 220), rgb(2, 13, 81));
+  color:white;
+  border:none;
+}

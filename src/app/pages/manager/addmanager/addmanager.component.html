@@ -1,0 +1,368 @@
+<div class="col-md-12">
+  <nb-card>
+    <nb-card-header>ADD BUSINESS </nb-card-header>
+    <nb-card-body>
+      <toaster-container [toasterconfig]></toaster-container>
+      <form [formGroup]="addmanager" class="form-horizontal" (ngSubmit)="addmanagersubmit();">
+        <div class="row" class="form-group row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <label>Bussiness Type<span style="color:red;">*</span></label>
+                <select formControlName="role" (change)="typeClear();showDistributor();form['share'].setValue('');"
+                  [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.role.invalid&&submit}">
+                  <option value="" selected>SELECT BUSINESS TYPE</option>
+                  <option value=1>Distributor</option>
+                  <option value=2>Sub Distributor</option>
+                  <option value=3>Reseller</option>
+                </select>
+              </div>
+
+              <div class="col-sm-3" *ngIf="addmanager.value['role']=='3'">
+                <label>RESELLER <span style="color:red;">*</span></label>
+                <select formControlName="re_type" (change)="typeClear();form['share'].setValue('');"
+                  [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.re_type.invalid&&submit}">
+                  <option value="" selected>SELECT THE RESELLER</option>
+                  <option value=1> Direct</option>
+                  <option value=2>Under</option>
+                </select>
+              </div>
+
+              <div class="col-sm-3" *ngIf="addmanager.value['re_type']=='2'" [hidden]="addmanager.value['role'] != 3 ">
+                <label>UNDER THE RESELLER <span style="color:red;">*</span></label>
+                <select formControlName="d1_type" (change)="typeClear();showDistributor();form['share'].setValue('');" 
+                  [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.d1_type.invalid&&submit}">
+                  <option value="" selected>SELECT THE DISTRIBUTED </option>
+                  <option value=1> Distributed</option>
+                  <option value=2>Sub Distributed</option>
+                </select>
+              </div>
+
+              <div class="col-sm-3" [hidden]="addmanager.value['d1_type']=='1' || addmanager.value['d1_type']=='' "
+                *ngIf="addmanager.value['role'] =='3' ">
+                <label>SUB DISTRIBUTOR<span style="color:red;">*</span></label>
+                <auto-completen
+                  [addclass]="{'form-control' : true,'form-control-danger':addmanager.controls.sub1.invalid&&submit}"
+                  optValues="bname" (changed)="showDistributor($event)" placeholder="Select sub distributor"
+                  formControlName="sub1" optId="mid" [item]="showdist">
+                </auto-completen>
+                <small *ngIf="addmanager.controls.sub1.invalid&&submit" class="form-text error">Please Select
+                  Sub Distributor!</small>
+              </div>
+
+
+              <div class="col-sm-3"
+                *ngIf="addmanager.value['role']=='2'||(addmanager.value['role']=='3' && addmanager.value['d1_type']=='1' )"
+                [hidden]="addmanager.value['re_type']==1">
+                <label>DISTRIBUTOR<span style="color:red;">*</span></label>
+                <auto-completen
+                  [addclass]="{'form-control' : true,'form-control-danger':addmanager.controls.dis_type.invalid&&submit}"
+                  optValues="bname" (changed)="showDistributor($event)" placeholder="Select dis_type"
+                  formControlName="dis_type" optId="mid" [item]="showdist">
+                </auto-completen>
+                <small *ngIf="addmanager.controls.dis_type.invalid&&submit" class="form-text error">Please Select
+                  Distributor!</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white; ">BASIC INFO</nb-card-header>
+              <nb-card-body>
+
+                <div class="form-group row">
+
+
+                  <div class="col-sm-12">
+                    <label>Business Name<span style="color:red;">*</span> </label>
+                    <input type="text" name="business_name" formControlName="business_name" placeholder="First Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.business_name.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['business_name'])&&submit"
+                      class="form-text error">Business
+                      is required! </small>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Full Name <span style="color:red;">*</span></label>
+                    <input type="text" name="fname" formControlName="fname" placeholder="Last Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.fname.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['fname'])&&submit" class="form-text error">Lastname is
+                      required! </small>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Login Id<span style="color:red;">*</span></label>
+                    <input [readonly]="this.editable" type="text" name="login" formControlName="login"
+                      placeholder="Last Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.login.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['login'])&&submit" class="form-text error">login is
+                      required! </small>
+                  </div>
+
+
+                  <div class="col-sm-6" [hidden]="id">
+                    <label>Password<span style="color:red;">*</span></label>
+                    <input type="password" name="password" formControlName="password" placeholder="Password"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.password.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['password'])&&submit"
+                      class="form-text error">Passwords is
+                      required! </small>
+                  </div>
+
+                  <div class="col-sm-6" [hidden]="id">
+                    <label>Confirm Password<span style="color:red;">*</span></label>
+                    <input type="password" name="cpassword" formControlName="cpassword" placeholder="cpassword"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.value['password'] !=addmanager.value['cpassword'] }" />
+                    <small *ngIf="addmanager.value['password'] !=addmanager.value['cpassword'] "
+                      class="form-text error">Passwords does not
+                      Match! </small>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Gender<span style="color:red;">*</span></label>
+                    <select formControlName="gender"
+                      [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.gender.invalid&&submit}">
+                      <option value="" selected>Select Gender</option>
+                      <option value="1">Female</option>
+                      <option value="2">Male</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Email<span style="color:red;">*</span></label>
+                    <input type="email" name="email" formControlName="email" placeholder="email"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.email.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['email'])&&submit" class="form-text error">Email is
+                      required! </small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+
+                  <div class="col-sm-6">
+                    <label>Mobile NO<span style="color:red;">*</span></label>
+                    <input type="number" name="mobile" formControlName="mobile" placeholder="mobile"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.mobile.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['mobile'])&&submit" class="form-text error">Mobile No
+                      is
+                      required! </small>
+                  </div>
+
+                  <div class="col-sm-6" [hidden]="id">
+                    <label>Logo<span style="color:red;">*</span></label>
+                    <input type="file" name="logo" formControlName="logo" (change)="upload($event.target.files)"
+                      placeholder="Please Enter LOGO NO"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.logo.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['logo'])&&submit" class="form-text error">Logo is
+                      required! </small>
+
+                  </div>
+
+                  <div class="col-sm-6" *ngIf="imageURL">
+                    <label>Logo Preview </label>
+                    <img [src]="imageURL" style="width:100%;height: 150px;">
+                  </div>
+
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <label>Active<span style="color:red;">*</span></label>
+                    <input type="checkbox" name="active" formControlName="active" placeholder="Last Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.active.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['active'])&&submit" class="form-text error">Amount is
+                      required! </small>
+                  </div>
+                </div>
+
+
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">PAYMENT GATEWAY</nb-card-header>
+              <nb-card-body>
+
+                <div class="form-group row">
+
+                  <div class="col-sm-6">
+                    <label>Gateway Name</label>
+                    <select formControlName="pgid"
+                      [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.pgid.invalid&&submit}">
+                      <option value="0" selected>Select Payment Gateway </option>
+                      <option *ngFor="let item of gateway" [ngValue]="item.id">{{ item.bank_name }}</option>
+                    </select>
+                  </div>
+
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">COMMUNICATION</nb-card-header>
+              <nb-card-body>
+
+                <div class="form-group row">
+
+
+                  <div class="col-sm-6">
+                    <label>State <span style="color:red;">*</span></label>
+                    <auto-completen
+                      [addclass]="{'form-control' : true,'form-control-danger':addmanager.controls.state.invalid&&submit}"
+                      optValues="name" (changed)="showDistrict()" placeholder="Select state" formControlName="state"
+                      id="id" [item]="state">
+                    </auto-completen>
+                    <small *ngIf="addmanager.controls.state.invalid&&submit" class="form-text error">Please Select
+                      State!</small>
+                    <!-- </div> -->
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>District <span style="color:red;">*</span></label>
+                    <auto-completen
+                      [addclass]="{'form-control' : true,'form-control-danger':addmanager.controls.state.invalid&&submit}"
+                      optValues="name" (changed)="showDistrict()" placeholder="Select District"
+                      formControlName="district" id="id" [item]="district">
+                    </auto-completen>
+                    <small *ngIf="addmanager.controls.state.invalid&&submit" class="form-text error">Please Select
+                      District </small>
+                  </div>
+
+
+
+                  <div class="col-sm-6">
+                    <label>Pincode<span style="color:red;">*</span></label>
+                    <input type="text" name="pincode" formControlName="pincode" placeholder="pincode"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.pincode.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['pincode'])&&submit" class="form-text error">pincode
+                      is
+                      required! </small>
+                  </div>
+
+
+
+                  <div class="col-sm-6">
+                    <label>GST NO</label>
+                    <input type="text" name="gstno" formControlName="gstno" placeholder="gstno"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.gstno.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['gstno'])&&submit" class="form-text error">GST No is
+                      required! </small>
+                  </div>
+
+
+                  <div class="col-sm-6">
+                    <label>Phone No </label>
+                    <input type="text" name="phone" formControlName="phone" placeholder="phone"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.phone.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required',['phone'])&&submit" class="form-text error">Phone is
+                      required
+                    </small>
+                    <span class="error"
+                      *ngIf="addmanager.get('phone').hasError('maxlength') && addmanager.get('phone').touched">
+                      Min 10 digit
+                    </span>
+
+                  </div>
+
+                  <div class="col-sm-12">
+                    <label>Address<span style="color:red;">*</span></label>
+                    <textarea type="text" name="address" formControlName="address" placeholder="Last Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.address.invalid&&submit}">
+                </textarea>
+                    <small *ngIf="addmanager.hasError('required',['address'])&&submit" class="form-text error">Address
+                      is
+                      required! </small>
+                  </div>
+
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+
+
+
+            <!-- <div class="col-md-12"> -->
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">SHARE DETAILS </nb-card-header>
+              <nb-card-body>
+
+                <div class="form-group row">
+
+                  <div class="col-sm-6">
+                    <label>Share Type <span style="color:red;">*</span></label>
+                    <select formControlName="share" (change)="clearShare();"
+                      [ngClass]="{'form-control':true,'form-control-danger':addmanager.controls.share.invalid&&submit}">
+                      <option value="" selected>Select share</option>
+                      <option value="1">Bulk</option>
+                      <option value="2">Deposit</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6" *ngIf="addmanager.value['share']=='2'"
+                    [hidden]="addmanager.value['re_type']==1">
+                    <label>DISTRIBUTED SHARE %<span style="color:red;">*</span></label>
+                    <input type="number" name="dshare" formControlName="dshare"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.dshare.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required','dshare')&&submit" class="form-text error">DISTRIBUTED
+                      SHARE % is
+                      required! </small>
+                    <small *ngIf="addmanager.hasError('limitNotMatch','dshare')&&submit" class="form-text error">Total
+                      share not equal to 100! </small>
+                  </div>
+
+                  <div class="col-sm-6" *ngIf="addmanager.value['share']=='2'">
+                    <label>GL TV SHARE % <span style="color:red;">*</span></label>
+                    <input type="number" name="isp" formControlName="isp"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.isp.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required','isp')&&submit" class="form-text error">GL TV SHARE is
+                      required! </small>
+                    <small *ngIf="addmanager.hasError('limitNotMatch','isp')&&submit" class="form-text error">Total
+                      share not equal to 100! </small>
+                  </div>
+
+                  <div class="col-sm-6" *ngIf="addmanager.value['share']=='2' && (addmanager.value['role']=='2' || ( addmanager.value['role']=='3' && 
+              addmanager.value['re_type']==2 && addmanager.value['d1_type']==2)) "
+                    [hidden]="addmanager.value['re_type']==1">
+                    <label>SUB DISTRIBUTED SHARE <span style="color:red;">*</span></label>
+                    <input type="number" name="sub_share" formControlName="sub_share"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.sub_share.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required','sub_share')&&submit" class="form-text error">Total
+                      share not equal to 100!
+                    </small>
+                    <!-- <small *ngIf="addmanager.hasError('limitNotMatch','sub_share')&&submit" class="form-text error">Total share not equal to 100! </small> -->
+                  </div>
+
+
+                  <div class="col-sm-6" *ngIf="addmanager.value['share']=='2' && addmanager.value['role']=='3'">
+                    <label>RESELLER SHARE <span style="color:red;">*</span></label>
+                    <input type="number" name="reseller_share" formControlName="reseller_share"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addmanager.controls.reseller_share.invalid&&submit}" />
+                    <small *ngIf="addmanager.hasError('required','reseller_share')&&submit"
+                      class="form-text error">Total share not equal to 100!</small>
+                    <!-- <small *ngIf="addmanager.hasError('limitNotMatch','reseller_share')&&submit" class="form-text error">Total share not equal to 100! </small> -->
+                  </div>
+
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <!-- </div> -->
+            <!-- </div> -->
+          </div>
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-md btn-success"> Submit </button>
+          <button class="btn btn-md btn-danger" [routerLink]="['/pages/manager/listmanager']">Back</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

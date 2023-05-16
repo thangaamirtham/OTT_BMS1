@@ -1,0 +1,160 @@
+<div *ngIf="editdata !={}">
+  <div class="col-md-12">
+    <nb-card>
+      <ngx-loading [show]="loading"
+        [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+      </ngx-loading>
+      <nb-card-header>Edit User </nb-card-header>
+      <nb-card-body>
+        <toaster-container [toasterconfig]></toaster-container>
+        <form [formGroup]="EditAdminForm" class="form-horizontal" (ngSubmit)="editAdminuser();">
+
+          <div class="row" class="form-group row" *ngIf="role.getroleid()>777">
+            <div class="col-md-8">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label>Bussiness Type<span style="color:red;">*</span></label>
+                  <select formControlName="role" (change)="showDistributor();clearValid()"
+                    [ngClass]="{'form-control':true,'form-control-danger':EditAdminForm.controls.role.invalid&&submit}">
+                    <option value="" selected>SELECT BUSINESS TYPE</option>
+                    <option value=1>Distributor</option>
+                    <option value=2>Sub Distributor</option>
+                    <option value=3>Reseller</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-4" *ngIf="EditAdminForm.value['role']=='1'">
+                  <label>Distributor <span style="color:red;">*</span></label>
+                  <auto-completen
+                    [addclass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.dmid.invalid&&submit}"
+                    optValues="bname" (changed)="showDistributor();" (keyUp)="showDistributor($event)"
+                    placeholder="Select distributor" formControlName="dmid" optId="mid" [item]="showdist">
+                  </auto-completen>
+                  <small *ngIf="EditAdminForm.hasError('required','dmid')&&submit" class="form-text error">distributor
+                    is
+                    required! </small>
+                </div>
+
+                <div class="col-sm-4" *ngIf="EditAdminForm.value['role']=='2'">
+                  <label>Sub Distributor <span style="color:red;">*</span></label>
+                  <auto-completen
+                    [addclass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.sdmid.invalid&&submit}"
+                    optValues="bname" (changed)="showDistributor();" (keyUp)="showDistributor($event)"
+                    placeholder="Select sub_distributed" formControlName="sdmid" optId="mid" [item]="showsub">
+                  </auto-completen>
+                  <small *ngIf="EditAdminForm.hasError('required','sdmid')&&submit"
+                    class="form-text error">sub_distributed
+                    is
+                    required! </small>
+                </div>
+
+                <div class="col-sm-4" *ngIf="EditAdminForm.value['role']=='3'">
+                  <label>Reseller<span style="color:red;">*</span></label>
+                  <auto-completen
+                    [addclass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.mid.invalid&&submit}"
+                    optValues="bname" (changed)="showDistributor();" (keyUp)="showDistributor($event)"
+                    placeholder="Select reseller" formControlName="mid" optId="mid" [item]="showman">
+                  </auto-completen>
+                  <small *ngIf="EditAdminForm.hasError('required','mid')&&submit" class="form-text error">reseller is
+                    required! </small>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row" class="form-group row">
+            <div class="col-md-6">
+              <nb-card status="info">
+                <nb-card-header style="background-color :  #2a72be;color: white;
+                ">FUNDAMENTALS</nb-card-header>
+                <nb-card-body>
+
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                      <label>User ID <span style="color:red;">*</span> </label>
+                      <input type="text" name="profileid" formControlName="profileid" placeholder="First Name"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.profileid.invalid&&submit}" />
+                      <small *ngIf="EditAdminForm.hasError('required','profileid')&&submit"
+                        class="form-text error">Firstname
+                        is required! </small>
+                    </div>
+                    <div class="col-sm-6">
+                      <label>Full Name <span style="color:red;">*</span></label>
+                      <input type="text" name="fullname" formControlName="fullname" placeholder="Last Name"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.fullname.invalid&&submit}" />
+                      <small *ngIf="EditAdminForm.hasError('required','fullname')&&submit"
+                        class="form-text error">Lastname
+                        is
+                        required! </small>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                      <label>Gender <span style="color:red;">*</span></label>
+                      <select formControlName="gender"
+                        [ngClass]="{'form-control':true,'form-control-danger':EditAdminForm.controls.gender.invalid&&submit}">
+                        <option value="" selected>Select Gender</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Others</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <label>Date of Birth <span style="color:red;">*</span></label>
+                      <input type="date" formControlName="dob" placeholder="dob Date "
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.dob.invalid&&submit}" />
+                      <!-- <owl-date-time #Exp></owl-date-time> -->
+                      <small *ngIf="EditAdminForm.controls.dob.invalid&&submit" class="form-text error">Expiry
+                        Date is required! </small>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="ustatus" formControlName="ustatus" />
+                        <label class="custom-control-label" for="ustatus">Active</label>
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-6">
+              <nb-card status="info">
+                <nb-card-header style="background-color :  #2a72be;color: white;">CREDENTIALS</nb-card-header>
+                <nb-card-body>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <label>Mobile number <span style="color:red;">*</span></label>
+                      <input type="number" name="Mobile" formControlName="mobile" placeholder="mobile"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.mobile.invalid&&submit}" />
+                      <small *ngIf="EditAdminForm.hasError('required','mobile')&&submit" class="form-text error">Mobile
+                        number is required! </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <label>Email</label>
+                      <input type="email" name="email" formControlName="email" placeholder="Email"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.email.invalid&&submit}" />
+                      <small *ngIf="EditAdminForm.hasError('required','email')&&submit" class="form-text error">Email is
+                        required! </small>
+                    </div>
+                  </div>
+
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-md btn-success">{{id ? 'Update': 'Create'}}</button>
+            <button class="btn btn-md btn-danger" [routerLink]="['/pages/user/list-user']">Back</button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div  style="background-color: #2a72be"class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="CircleForm" class="form-horizontal" (ngSubmit)="submitfn();">
+  <div class="modal-body">
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label>Circle  <span style="color:red;">*</span> </label>
+        <input autofocus type="text" formControlName="circlename" placeholder="Circle Name"
+          [ngClass]="{'form-control' : true,'form-control-danger':CircleForm.controls.circlename.invalid&&submit}" />
+        <small [hidden]="!(CircleForm.hasError('required','circlename')&&submit)" class="form-text error">Circle Name is
+          required!</small>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-12">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="status" formControlName="status" />
+          <label class="custom-control-label" for="status">Active</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-success">Add</button>
+    <button type="button" class="btn btn-md btn-danger " (click)='submit=false;createForm();'>Back</button>
+  </div>
+</form>

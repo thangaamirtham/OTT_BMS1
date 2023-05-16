@@ -1,0 +1,57 @@
+<!-- <nb-card-header>
+    <div class="header-container">
+      <div class="icon">
+        <i class="ion-social-usd"></i>
+      </div>
+      <span class="title">Profit</span>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+     <ngx-stats-bar-animation-chart [linesData]="linesData"></ngx-stats-bar-animation-chart> -->
+
+<!--    <div class="row">
+        <div class="col-xxxl-3 col-md-4" *ngFor="let statusCard of statusCards">
+          <ngx-status-card [title]="statusCard.title"
+                           [type]="statusCard.type"
+                           [value]="statusCard.value">
+            <i [ngClass]="statusCard.iconClass"></i>
+          </ngx-status-card>
+        </div>
+      </div>
+  </nb-card-body> -->
+<nb-card-header style="background-color: #ba7fec;">
+  <div class="header-container">
+    <div class="icon">
+      <i class="fas fa-rupee-sign"></i>
+    </div>
+    <span class="title">Balance</span>
+  </div>
+</nb-card-header>
+<nb-card-body class="p-3">
+  <div class="info">
+    <div class="row">
+      <div class="period latest">
+        <label style="text-align: left;font-size: medium;"><b>Balance</b></label>
+        <div class="value">
+          <!-- <i class="fas fa-rupee-sign">{{balance == null ? 0 : balance }}</i> -->
+          <b  style="font-size: larger;font-family: 'Roboto';">{{balance == null ? 0 : (balance | currency:'INR':'symbol') }}</b>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+    <!-- <div class="row"> -->
+    <!-- <div class="info">  -->
+    <!-- <div class="period" style="padding-left: 10%;">
+          <span class="time-interval">Previous Month Closing Balance</span>
+          <div class="value">
+            <i class="fas fa-rupee-sign"></i>
+            0
+          </div>
+        </div>
+      </div> -->
+  </div>
+  <!--  <ngx-stats-ares-chart></ngx-stats-ares-chart> -->
+</nb-card-body>
+<nb-card-footer>
+  <button type="button" class="btn btn-xs btn-primary " style="float: right;font-weight: 800;" (click)='recharge(1)'>TopUp </button>
+</nb-card-footer>

@@ -1,0 +1,52 @@
+
+<nb-card>
+  <nb-card-header>List Franchise <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;
+    background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;"
+      (click)="search=!search;"><i class="fa fa-search"></i></a>
+      <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+    (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]></toaster-container>
+    <button  class="btn btn-sm btn-success"
+      (click)="add()" style="background-color: #2a72be">Add</button>
+    
+    <div class="row">
+      <div class="col-md-12">
+         <label class="left">
+            <h5>Total Count : {{count}}</h5>
+         </label>
+          <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+       </div>
+   </div>
+    <hr style="border: 0px;">
+    <div class="table-wrapper">
+      <table class="table table-hover table-striped">
+        <tr style="background-color :#2a72be;color:white;font-size: medium;">
+          <th>ACTION</th>
+          <th>USER NAME</th>
+          <th>FIRST NAME</th>
+          <th>AMOUNT</th>
+          <th>SHARE TYPE</th>
+          <th>ADDRESS</th>
+          <th>BUSINESS SHARE</th>
+          <th>DISTRIBUTED SHARE</th>
+          <th>RESELLER SHARE</th>
+        </tr>
+        <!-- <tr> -->
+       <tr *ngFor="let item of data">
+          <td><a [routerLink]="['/pages/Franchise/addfranchise']" [queryParams]="{id:item.id}"><i class="nb-edit" style="font-size: 20px;"></i>Edit</a></td>
+         <!-- <td>{{item.mid}}</td>
+        <td>{{item.circlename}}</td>
+        <td>{{item.userid}}</td>
+        <td>{{item.fname}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.mobile}}</td> -->
+        </tr>
+        <tr>
+          <td colspan="11" *ngIf="datas==''">NO DATA FOUND</td>
+        </tr>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>

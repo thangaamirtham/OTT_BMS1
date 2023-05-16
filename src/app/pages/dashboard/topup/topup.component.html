@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <toaster-container [toasterconfig]="config"> </toaster-container>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+     <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+<form [formGroup]="TopupForm" (ngSubmit)="addPay()">
+  <div class="modal-body">
+     <div class="form-group row">
+        <!-- <div class="col-sm-4">
+         <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" value="1"
+               formControlName="pay_mode" name="pay_mode">
+            <span class="custom-control-indicator"></span>Phone Pay
+         </label>
+        </div>
+        <div class="col-sm-4">
+         <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" value="2"
+               formControlName="pay_mode" name="pay_mode">
+            <span class="custom-control-indicator"></span>Google Pay
+         </label>
+        </div>
+        <div class="col-sm-4">
+         <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" value="3"
+               formControlName="pay_mode" name="pay_mode">
+            <span class="custom-control-indicator"></span>Net Banking
+         </label>
+        </div> -->
+        <div class="col-sm-12">
+           <label>Amount <span style="color:red;">*</span></label>
+           <input type="number" name="amt" formControlName="amt" placeholder="Amount"
+              [ngClass]="{'form-control' : true,'form-control-danger':TopupForm.controls.amt.invalid&&submit}" />
+           <small *ngIf="TopupForm.hasError('required','amt')&&submit" class="form-text error">Amount
+              is required! </small>
+        </div>
+        <div class="col-sm-12">
+         <label>Remarks</label>
+         <textarea formControlName="trnRemarks" placeholder="Remarks" 
+         [ngClass]="{'form-control':true,'form-control-danger':TopupForm.controls.trnRemarks.invalid&&submit}"></textarea>
+        </div>
+     </div>
+  </div>
+  <div class="modal-footer" >
+     <button type="submit" class="btn btn-md btn-primary">Ok</button>
+  </div>
+</form>
