@@ -101,6 +101,8 @@ export class InvoiceComponent implements OnInit {
         param['INVOICE AMOUNT'] = temp[i]['totinvamt'];
         param['TAX AMOUNT'] = temp[i]['totinvtaxamt'];
         param['TOTAL AMOUNT'] = temp[i]['total'];
+        param['RESELLER BEFORE AMOUNT'] = temp[i]['beforedetection'];
+        param['DEDUCTED  AMOUNT'] = temp[i]['detectedamt'];
         param['GLTVEXPIRY'] = this.datePipe.transform(temp[i]['expirydate'], 'd MMM y hh:mm:ss a');
         param['OTTEXPIRY'] = this.datePipe.transform(temp[i]['ottexpirydate'], 'd MMM y hh:mm:ss a');
         param['RESPONSE'] = temp[i]['res_msg'];
@@ -108,6 +110,7 @@ export class InvoiceComponent implements OnInit {
         param['VENDOR'] = temp[i]['ott_vendor'] == 1 ? 'M2MIT' : 'PLAYBOX'
         temp[i]['cdate'] = this.datePipe.transform(temp[i]['cdate'], 'd MMM y hh:mm:ss a')
         param['INVOICE DATE'] = temp[i]['cdate'];
+        param['PAY STATUS'] = temp[i]['pay_status'] == 1 ? 'Un-paid' : 'Paid'
 
         // temp[i]['inv_date'] = this.datePipe.transform(temp[i]['inv_date'], 'd MMM y hh:mm:ss a')
 

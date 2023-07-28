@@ -92,7 +92,7 @@
 
                   <div class="form-group row">
                     <div class="col-sm-6">
-                      <label>Gender <span style="color:red;">*</span></label>
+                      <label>Gender </label>
                       <select formControlName="gender"
                         [ngClass]="{'form-control':true,'form-control-danger':EditAdminForm.controls.gender.invalid&&submit}">
                         <option value="" selected>Select Gender</option>
@@ -102,12 +102,12 @@
                       </select>
                     </div>
                     <div class="col-sm-6">
-                      <label>Date of Birth <span style="color:red;">*</span></label>
+                      <label>Date of Birth </label>
                       <input type="date" formControlName="dob" placeholder="dob Date "
                         [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.dob.invalid&&submit}" />
                       <!-- <owl-date-time #Exp></owl-date-time> -->
-                      <small *ngIf="EditAdminForm.controls.dob.invalid&&submit" class="form-text error">Expiry
-                        Date is required! </small>
+                      <!-- <small *ngIf="EditAdminForm.controls.dob.invalid&&submit" class="form-text error">Expiry
+                        Date is required! </small> -->
                     </div>
                   </div>
 
@@ -140,8 +140,8 @@
                       <label>Email</label>
                       <input type="email" name="email" formControlName="email" placeholder="Email"
                         [ngClass]="{'form-control' : true,'form-control-danger':EditAdminForm.controls.email.invalid&&submit}" />
-                      <small *ngIf="EditAdminForm.hasError('required','email')&&submit" class="form-text error">Email is
-                        required! </small>
+                      <!-- <small *ngIf="EditAdminForm.hasError('required','email')&&submit" class="form-text error">Email is
+                        required! </small> -->
                     </div>
                   </div>
 

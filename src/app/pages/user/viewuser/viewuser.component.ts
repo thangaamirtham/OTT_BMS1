@@ -7,6 +7,7 @@ import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { ChangepasswordComponent } from '../changepassword/changepassword.component';
 import { ShowpasswordComponent } from '../showpassword/showpassword.component';
 import { ChangeValidityComponent } from '../change-validity/change-validity.component';
+import { async } from '@angular/core/testing';
 
 
 @Component({
@@ -47,8 +48,9 @@ export class ViewuserComponent implements OnInit, OnDestroy {
     const activeModal = this.modal.open(RenewuserComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Renewal';
     activeModal.componentInstance.item = { uid, role_type, dmid, sdmid, mid };
-    activeModal.result.then((data) => {
-      this.view();
+    activeModal.result.then(async(data) => {
+      await this.view();
+     await this.invoicelist()
     })
   }
 

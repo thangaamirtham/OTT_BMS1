@@ -28,17 +28,24 @@
         <div class="form-group row">
           <div class="col-sm-12">
             <label>Payment status</label>
-            <select formControlName="pay_status" (change)="RenewSubsForm.controls.pay_amt.setValue('');"
+            <select formControlName="pay_status"
               [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.pay_status.invalid&&submit}">
               <option value="" selected>Select Payment Status</option>
               <option value="2">Paid</option>
               <option value="1">Unpaid</option>
             </select>
+
+            <!-- <select formControlName="pay_status" (change)="RenewSubsForm.controls.pay_amt.setValue('');"
+            [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.pay_status.invalid&&submit}">
+            <option value="" selected>Select Payment Status</option>
+            <option value="2">Paid</option>
+            <option value="1">Unpaid</option>
+          </select> -->
           </div>
         </div>
 
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <div class="col-sm-12" *ngIf="RenewSubsForm.value['pay_status']=='2'">
             <label>Amount</label>
             <input type="textarea" formControlName="pay_amt"
@@ -46,9 +53,9 @@
             <small *ngIf="RenewSubsForm.controls.pay_amt.invalid&&submit" class="form-text error">Amount Is
               Required!</small>
           </div>
-        </div>
+        </div> -->
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <div class="col-sm-12" *ngIf="RenewSubsForm.value['pay_status']=='2'">
             <label>Paid Date </label>
             <input type="datetime-local" formControlName="pay_date" placeholder="Paid Date"
@@ -56,7 +63,7 @@
             <small *ngIf="RenewSubsForm.controls.pay_date.invalid&&submit" class="form-text error"> Date is
               required! </small>
           </div>
-        </div>
+        </div> -->
 
         <div class="form-group row">
           <div class="col-sm-12">
@@ -76,6 +83,25 @@
             <div class="col-md-12" *ngIf="RenewSubsForm.value['planid']" style="font-weight:800;padding:12px;overflow-y:scroll;height:362px;">
               <div class="table-wrapper">
                 <table class="table table-bordered table-striped">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">RENEWAL SUMMARY</th>
+                    </tr>
+                    <tr>
+                      <td>Invoice Amount</td>
+                      <th>{{ottAmount? (ottAmount | currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                    <tr>
+                      <td>Tax Amount</td>
+                      <th>{{ottTaxAmount? (ottTaxAmount| currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                    <tr>
+                      <td>Total Amount</td>
+                      <th>{{ottTotal? (ottTotal | currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-bordered table-striped"  *ngIf="ottPlanDetails">
                   <tbody>
                     <tr>
                       <th>OTT PLATFORMS</th>

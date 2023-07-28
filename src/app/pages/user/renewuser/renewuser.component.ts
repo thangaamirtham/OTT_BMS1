@@ -20,6 +20,7 @@ export class RenewuserComponent implements OnInit {
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
+  ottPlanDetails;ottAmount;ottTaxAmount;ottTotal;
   constructor(
     private alert: ToasterService,
     private router: Router,
@@ -43,20 +44,23 @@ export class RenewuserComponent implements OnInit {
   }
 
   async packsrv($event = '') {
+    console.log('Event------',$event);
     let manid = this.item['role_type'] == 1 ? this.item['dmid'] : this.item['role_type'] == 2 ? this.item['sdmid'] : this.item['role_type'] == 3 ? this.item['mid'] : '';
-    let resp = await this.psrv.listAllowPack({ like: $event, manid: manid });
+    let resp = await this.psrv.listAllowPack({ like: $event, manid: manid,ott_vendor:2 });
     this.pack = resp[0]
     console.log('Pack', this.pack)
   }
 
   async getOttName() {
-    let packid = this.pack.filter(x => x.id == this.RenewSubsForm.value['planid']).map(x => x['ottpid'])
-    console.log('Packid', packid)
-
-    let result = await this.psrv.getottplanname({ ottplanid: packid });
-    console.log('Ott name result', result)
-    if (result['ottname']) this.ottPlatforms = result['ottname'].split(',')
-
+    const [{ottpid,oamt,otaxamt,ottpamt,otttype}] = this.pack.filter(x => x.id == this.RenewSubsForm.value['planid'])
+    console.log('Packid', ottpid,oamt,otaxamt)
+    this.ottAmount=oamt;this.ottTaxAmount=otaxamt;this.ottTotal=Number(oamt) + Number(otaxamt)
+    if(otttype==2){
+      let result = await this.psrv.getottplanname({ ottplanid: ottpid });
+      console.log('Ott name result', result)
+      if (result['ottname']) this.ottPlatforms = result['ottname'].split(',')
+      this.ottPlanDetails = result;
+    }else  this.ottPlanDetails = '';
   }
 
   async renewSubmit() {
@@ -92,8 +96,8 @@ export class RenewuserComponent implements OnInit {
     this.RenewSubsForm = this._formBuilder.group({
       planid: ["", Validators.required],
       pay_status: ['1', Validators.required],
-      pay_amt: [""],
-      pay_date: [""],
+      // pay_amt: [""],
+      // pay_date: [""],
       comment: [""],
     });
   }

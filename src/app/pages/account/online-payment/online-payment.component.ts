@@ -84,6 +84,7 @@ export class OnlinePaymentComponent implements OnInit {
         param['RESELLER TYPE'] = temp[i]['role'] == 777 ? 'Distributor' : temp[i]['role'] == 666 ? 'Sub-Distributor' : 'Reseller';
         param['RESELLER NAME'] = temp[i]['bname'];
         param['ORDERID'] = temp[i]['txnid'];
+        param['BEFORE BALANCE'] = temp[i]['manager_before_balance'];
         param['DEPOSIT AMOUNT'] = temp[i]['deposit_amount'];
         param['STATUS'] = temp[i]['gwstatus'] == 0 ? 'Initiate' : temp[i]['gwstatus'] == 1 ? 'Processing' : temp[i]['gwstatus'] == 2 ? 'Success' :
           temp[i]['gwstatus'] == 3 ? 'Failure' : '--'

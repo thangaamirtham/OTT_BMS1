@@ -13,7 +13,6 @@
   </nb-card-header>
   <nb-card-body>
     <toaster-container [toasterconfig]="config"></toaster-container>
-    <button class="btn btn-sm btn-success" [routerLink]="['/pages/package/add-ott']">Add</button>
     <hr style="border: 0px;">
     <div class="modal-body" autocomplete="off" [hidden]='!search'>
       <div class="form-group row">
@@ -93,6 +92,7 @@
           <th *ngIf="role.getroleid()>777">RESELLER NAME </th>
           <!-- <th>DEPOSIT TYPE</th> -->
           <th>ORDERID</th>
+          <th>BEFORE BALANCE</th>
           <th>DEPOSIT AMOUNT</th>
           <th>STATUS</th>
           <th>PAY MODE</th>
@@ -123,6 +123,7 @@
           <td *ngIf="role.getroleid()>777">{{item.bname}}</td>
           <!-- <td>{{item.deposit_type ==3? 'Reseller Online Topup': '--'}}</td> -->
           <td>{{item.txnid}}</td>
+          <td style="font-weight:900;text-align: center;">{{item.manager_before_balance | currency : 'INR': 'symbol'}}</td>
           <td style="font-weight:900;text-align: center;">{{item.deposit_amount | currency : 'INR': 'symbol'}}</td>
           <td>{{item.gwstatus ==0?'Initiate':item.gwstatus==1? 'Processing': item.gwstatus == 2 ?'Success':
             item.gwstatus ==3 ? 'Failure': '--'}}

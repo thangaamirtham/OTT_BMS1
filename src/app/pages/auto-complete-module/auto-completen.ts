@@ -98,6 +98,8 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit {
   }
 
   onOutput(event = '') {
+    console.log('outputtt',event);
+    console.log('outputtt textbox',this.textbox);
     let keycode = event['keyCode'] || 0, val = this.textbox;
     if (keycode === 8) {// Backspace
       this.keyUp.emit(this.textbox)
@@ -128,7 +130,11 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit {
       (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
       (keycode > 218 && keycode < 223))
     ) {
-      this.keyUp.emit(this.textbox)
+      // if(!this.textbox) this.textbox = event['key']
+    //  if(this.textbox)  this.keyUp.emit(this.textbox)
+    this.keyUp.emit(this.textbox)
+    console.log('Textboxxxxxxxxxxxxxx',this.textbox);
+    
       this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
       this.index = -1;
       this.dropDown.nativeElement.scrollTop = 0;

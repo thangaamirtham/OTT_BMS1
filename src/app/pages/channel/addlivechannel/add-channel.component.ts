@@ -41,7 +41,7 @@ export class AddCompComponent implements OnInit {
       await this.edit();
     }
     
-    this.langlist(),this.listgenre(),this.edit();
+    this.langlist(),this.listgenre();
 
 
 }
@@ -58,7 +58,6 @@ async add()  {
     if (result[0]['error_msg'] == 0) this.router.navigate(['/pages/channel/list-channel'])
   }
 }
-
 
 
 

@@ -105,11 +105,13 @@
           <th style="border: 2px solid #aeb8b9;color: white; text-align: center;" colspan="2"  *ngIf="this.role.getroleid()>777">RESELLER</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2">USER</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="4">PACK INFO</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2">RESELELR BALANCE</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">CUSTOMER SUBSCRIPTION</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2" >EXPIRYDATE</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">RESPONSE</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">STATUS</th>
           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">INVOICE DATE</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">Pay Status</th>
 
        
          </tr>
@@ -125,13 +127,18 @@
            <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">AMOUNT</th>
            <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">TAX</th>
 
+           
+
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">	BEFORE DEDUCTION</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">DEDUCTED AMOUNT</th>
+
 
            <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">	GLTV</th>
            <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">OTT</th>
            </tr>
        
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid()>777 && item.ottstatus !=2" style="padding: 1px;" class=" last" data-title="'Action'">
+          <td *ngIf="role.getroleid()>777 && item.ottstatus !=2 && item.mapottid" style="padding: 1px;" class=" last" data-title="'Action'">
             <div class="dropdown ghost-dropdown" ngbDropdown>
               <button style="width: 70px;border: 2px solid #73a1ff;font-size: 10px;margin: 3px;"
                 class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action&nbsp;
@@ -154,6 +161,8 @@
            <td >{{item.ottpackname || '--'}}</td> 
            <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.totinvamt}}</td> 
           <td class="rupee" > <i class="fas fa-rupee-sign" ></i> {{item.totinvtaxamt}}</td>
+          <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.beforedetection}}</td> 
+          <td class="rupee" > <i class="fas fa-rupee-sign" ></i> {{item.detectedamt}}</td>
           <td  style="white-space:break-spaces">{{item.platforms}}</td>
           <td >{{item.expirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td> 
           <td >{{item.ottexpirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td>
@@ -168,7 +177,7 @@
           </td> 
           <td >{{item.ottstatus==1?'processing':item.ottstatus==2?'Activated':'Cancelled'}}</td> 
           <td>{{(item.cdate | date:'d MMM y h:mm:ss a')}}</td>
-
+          <td>{{item.pay_status == 1 ? 'Un-Paid' : 'Paid'}}</td>
         </tr>
        
       </table>

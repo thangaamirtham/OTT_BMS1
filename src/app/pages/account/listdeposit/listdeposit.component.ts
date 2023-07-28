@@ -83,6 +83,7 @@ export class ListdepositComponent implements OnInit {
         param['DEPOSIT TYPE'] = temp[i]['deposit_type'] == 1 ? 'Deposit' : temp[i]['deposit_type'] == 2 ? 'Debit' : temp[i]['deposit_type'] == 3 ? 'Reseller Online Topup' : '--';
         param['ORDERID'] = temp[i]['txnid'];
         param['DEPOSIT AMOUNT'] = temp[i]['deposit_amount'];
+        param['BEFORE AMOUNT'] = temp[i]['manager_before_balance'];
         param['REASON'] = temp[i]['reason'];
         param['DEPOSIT BY'] = temp[i]['deposited_by'];
         param['DEPOSIT DATE'] = this.datepipe.transform(temp[i]['cdate'], 'd MMM y h:mm:ss a');
