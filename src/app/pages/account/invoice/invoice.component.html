@@ -138,7 +138,7 @@
            </tr>
        
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid()>777 && item.ottstatus !=2 && item.mapottid" style="padding: 1px;" class=" last" data-title="'Action'">
+          <td *ngIf="item.mapottid && role.getroleid()>777 && item.ottstatus !=2" style="padding: 1px;" class=" last" data-title="'Action'">
             <div class="dropdown ghost-dropdown" ngbDropdown>
               <button style="width: 70px;border: 2px solid #73a1ff;font-size: 10px;margin: 3px;"
                 class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action&nbsp;
@@ -150,7 +150,7 @@
               </ul>
             </div>
           </td>
-          <td *ngIf="role.getroleid()>777 && item.ottstatus ==2">--</td>
+          <td *ngIf="role.getroleid()>777 && (item.ottstatus ==2 || (!item.mapottid && item.ottstatus !=2))">--</td>
            <td  *ngIf="this.role.getroleid()>777">{{item.iolid}}</td>  
            <td  *ngIf="this.role.getroleid()>777">{{item.role_type == 1? 'Distributor': item.role_type ==2? 'Sub-Distributor':
           item.role_type ==3 ? 'Reseller': '--'}}</td>  
