@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div style="overflow: auto;">
+  <div style="margin: 1em;text-align: left;-webkit-box-align: center;">
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Status</th>
+        <td><b>{{item.ottstatus}}</b></td>
+      </tr>
+    
+      <tr>
+        <th>OTT Code</th>
+        <td><b>{{item.ottplancode}}</b></td>
+      </tr>
+      <tr>
+        <th>OTT Name</th>
+        <td>{{item.platforms}}</td>
+
+      </tr>
+      <tr>
+        <th>Message</th>
+        <td><b>{{(formattedResponse && formattedResponse['message'])}}</b></td>
+
+      </tr>
+
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-md btn-success " style="margin:auto;" (click)="closeModal()">OK</button>
+</div>

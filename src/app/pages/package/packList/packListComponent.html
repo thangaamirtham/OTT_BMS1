@@ -1,0 +1,132 @@
+<nb-card>
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+  <nb-card-header> List Package <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]></toaster-container>
+    <button  class="btn btn-sm btn-success"
+      (click)='add()' style="background-color: #2a72be">Add</button>
+    <hr style="border: 0px;">
+    <!-- <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3" >
+          <label>ISP Name</label>
+          <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
+          placeholder='Select Business' id="bus_name"
+            [item]="bus">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3" >
+          <label>Circle</label>
+          <auto-completen [(ngModel)]="group_name"  addclass="form-control"
+            optValues="groupname" placeholder='Select Circle' optId="groupid" [item]="group1">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Service Mode</label>
+          <select name="srvmode" [(ngModel)]="srvmode" class="form-control">
+            <option value="" selected>Select Service Mode</option>
+            <option value="0">Regular</option>
+            <option value="1">Fallback</option>
+            <option value="2">Expiry Service</option>
+            <option value="3">Disabled </option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Service Type</label>
+          <select name="Service" [(ngModel)]="Service" class="form-control">
+            <option value="" selected>Select Service Type</option>
+            <option value="0">Prepaid</option>
+            <option value="2">Postpaid</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Service Data Type</label>
+          <select name="Data" [(ngModel)]="Data" class="form-control" >
+            <option value="" selected>Select Data Type </option>
+            <option value="1">Unlimited</option>
+            <option value="2">FUP</option>
+          </select>
+        </div>
+        <div class="col-sm-3" *ngIf="role.getroleid()>=775">
+          <label>Reseller Name</label>
+          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
+            placeholder='Select Reseller' (keyUp)="showResellerName($event)" id="res_name" [item]="res1">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Service Name</label>
+          <auto-completen [(ngModel)]="name" addclass="form-control" optValues="srvname"
+            placeholder='Select Service name' (keyUp)="showService($event)" optId="srvid" [item]="nam1">
+          </auto-completen>
+        </div>
+      </div>
+      <button type="button" class="btn btn-md btn-success" (click)='page=1;initiallist();'
+        style="margin: auto; display: block;">Search</button>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <label>
+          <h5>Total Count: {{count}}</h5>
+        </label>
+        <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+      </div>
+    </div> -->
+  
+  
+      <table class="table table-hover table-striped">
+        <tr style="background-color :  #2a72be;color:white;font-size: medium;">
+          <th>Action</th>
+          <th>Package ID</th>
+          <th>Package Name</th>
+          <th>Circle Name</th>
+          <!-- <th>Channels</th> -->
+          <th>Tax Type</th>
+          <th>Pack Price</th>
+          <th>Pack Active Date</th>
+          <th>Pack Expiry Date</th>
+          <th>Status</th>
+         </tr>
+        <tr *ngFor="let item of data">
+          <td><a (click)='Edit(item);'><i class="nb-edit" style="font-size: 20px;"></i>Edit</a></td>
+          <td>{{item.pack_id}}</td>
+          <td>{{item.packname}}</td>
+          <td>{{item.circlename}}</td>
+          <!-- <td>{{item.channel_id}}</td> -->
+          <td>{{item.tax_type}}</td>
+          <td>{{item.amt}}</td>
+          <td>{{item.pack_active_date}}</td>
+          <td>{{item.pack_deactive_date}}</td>
+          <td>{{item.status==true?'Active':'Deactive'}}</td>
+        
+       
+          
+
+         
+        </tr>
+        <!-- <tr>
+          <td colspan="24" *ngIf="pagedItems==''">NO DATA FOUND</td>
+        </tr> -->
+      </table>
+   
+  
+    <!-- <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div> -->
+  </nb-card-body>
+</nb-card>

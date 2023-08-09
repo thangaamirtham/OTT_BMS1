@@ -1,0 +1,192 @@
+<div class="col-md-12">
+  <nb-card>
+    <ngx-loading [show]="loading"
+      [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+    </ngx-loading>
+    <nb-card-header>View User
+      <a type="button" class="btn btn-primary btn-sm btn-floating "
+        style="float: right;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px;cursor: pointer; ;padding-right: 3px;color:white;"
+        (click)="refresh()"><i class="fas fa-sync"></i> Refresh</a>
+    </nb-card-header>
+
+    <nb-card-body>
+      <toaster-container [toasterconfig]="config"> </toaster-container>
+
+      <div class="row" style="padding-left: 10px;">
+        <div style="padding: 2px;">
+          <button class="btn btn-tn btn-outline-primary" (click)="renewUser(user_id,data.role_type,data.dmid,data.sdmid,data.mid)"><span class="boldz">Renewal</span></button>
+        </div>
+        <div style="padding: 2px;">
+          <button class="btn btn-tn btn-outline-primary" [routerLink]="['/pages/user/edit-user']"
+            [queryParams]='{id: user_id}'><span class="boldz">Edit</span></button>
+        </div>
+        <div style="padding: 2px;">
+          <button class="btn btn-tn btn-outline-primary" (click)="changePwd(data.id)"><span class="boldz">Change password</span></button>
+        </div>
+        <div style="padding: 2px;">
+          <button class="btn btn-tn btn-outline-primary" (click)="show_propass();"><span class="boldz">Show Profile pwd</span></button>
+       </div>
+       <div style="padding: 2px;">
+        <button class="btn btn-tn btn-outline-primary" (click)="changeValidity(data.id,data.ottexpirydate);"><span class="boldz">Change Validity</span></button>
+     </div>
+
+      </div>
+      <hr>
+      <!-- <ngb-tabset> -->
+      <!-- <ngb-tab title="Basic Info">
+          <ng-template ngbTabContent> -->
+      <hr style="border:0px">
+      <div class="row">
+        <div class="col-lg-12">
+          <nb-card>
+            <nb-card-header style="background-color :  #01a7ee;color: white;text-align: center;">User Details
+            </nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-lg-6">
+                  <table class="table table-hover table-striped">
+
+                    <tr>
+                      <th>User Name</th>
+                      <td>{{data ? data.fullname: ''}}</td>
+                    </tr>
+                    <tr>
+                      <th>Backend-ID</th>
+                      <td style="font-size: medium;"><b>{{ data ? data.id: ''}}</b></td>
+                    </tr>
+                    <tr>
+                      <th>LoginID</th>
+                      <td style="text-transform: none !important;font-size: medium"><b>{{data ?data.profileid: ''}}</b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <!-- <th>Status</th>
+                        <td>
+                          <a [ngStyle]="{'color' :data.ustatus==1 ? 'green' : 'red' }"
+                            [ngClass]="{'ion-close-round':data.ustatus!=1? true:false,'ion-checkmark-round': data.ustatus==1 ? true:false  }"></a>
+                        </td> -->
+                    </tr>
+                    <tr>
+                      <th>Mobile No</th>
+                      <td>{{data?data.mobile: ''}}</td>
+                    </tr>
+                    <tr>
+                      <th>Email Id</th>
+                      <td>{{data ?data.email: ''}}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="col-lg-6">
+                  <table class="table table-hover table-striped">
+
+                    <tr>
+                      <th>OTTPlan Code</th>
+                      <td style="font-size: medium;"><b>{{data ? data.ottplancode: ''}}</b></td>
+                    </tr>
+                    <tr>
+                      <th>Created Date</th>
+                      <td style="font-size: medium;"><b>{{!data? '': data.cdate | date: 'dd MMM yyy hh:mm:ss'}}</b></td>
+                    </tr>
+                    <tr>
+                      <th>Ott ExpiryDate</th>
+                      <td class="expiry">{{!data? '': data.ottexpirydate | date: 'dd MMM yyy hh:mm:ss'}}</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <!-- <tr>
+                      <th>GltvExpiry Date</th>
+                      <td class="expiry">{{!data? '': data.expirydate | date: 'dd MMM yyy hh:mm:ss'}}</td>
+                    </tr> -->
+                    <tr>
+                      <th>Status</th>
+                      <td style="font-size: medium;">
+                        <a [ngStyle]="{'color' : data ? data.ustatus==1 ? 'green' : 'red' : '' }"
+                          [ngClass]="{'ion-close-round': data ? data.ustatus!=1? true:false:false,'ion-checkmark-round':data? data.ustatus==1 ? true:false :false }"></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <nb-card>
+            <nb-card-header style="background-color :  #01a7ee;color: white;text-align: center;">Transaction Details
+            </nb-card-header>
+            <nb-card-body>
+              <div class="col-lg-12">
+                <table class="table table-hover table-striped">
+                  <tr style="color:blue;font-weight:600">
+                    <th>Invoice ID</th>
+                    <th>OttPack Name</th>
+                    <th>Price</th>
+                    <th>Customer Subscriptions</th>
+                    <!-- <th>Gltv ExpiryDate</th> -->
+                    <th>Subscription StartDate</th>
+                    <th>Subscription EndDate</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr style="font-weight:600" *ngFor="let item of invoicedata">
+
+                    <td>{{item.iolid}}</td>
+                    <td>{{item.ottpackname}}</td>
+                    <!-- <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.totinvamt + item.totinvtaxamt}}</td>  -->
+                    <td class="rupee">{{item.totinvamt + item.totinvtaxamt | currency : 'INR' : 'symbol' : '.0'}}</td>
+                    <td style="white-space:break-spaces">{{item.platforms}}</td>
+                    <!-- <td>{{item.expirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td> -->
+                    <td>{{item.cdate | date: 'dd MMM yyyy hh:mm:ss'}}</td>
+                    <td>{{item.ottexp_date | date: 'dd MMM yyyy hh:mm:ss'}}</td>
+                    <td>{{item.ottstatus==1?'processing':item.ottstatus==2?'Activated':'Cancelled'}}</td>
+                  </tr>
+                </table>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+
+      <!-- 
+          </ng-template>
+        </ngb-tab> -->
+
+      <!-- 
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <div (click)="invoicelist()">Invoice</div>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <table class="table table-hover table-striped">
+              <tr style="background-color :  #01a7eee5;color:white;font-size: medium;">
+                 <th>Invoice ID</th>
+                <th>OttPack Name</th>
+                <th>Price</th>
+                <th>Gltv ExpiryDate</th>
+                <th>Ott ExpiryDate</th>
+                <th>Status</th>
+               </tr>
+              <tr *ngFor="let item of invoicedata">
+                
+                <td>{{item.iolid}}</td>
+                <td>{{item.ottpackname}}</td>
+                <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.totinvamt + item.totinvtaxamt}}</td> 
+                 <td >{{item.expirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td> 
+                <td >{{item.ottexpirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td>
+                <td >{{item.ottstatus==1?'processing':item.ottstatus==2?'Activated':'Cancelled'}}</td> 
+              </tr>
+            </table>
+          </ng-template>
+        </ngb-tab> -->
+
+      <!-- </ngb-tabset> -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-md btn-danger" (click)='cancel()'>Back</button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

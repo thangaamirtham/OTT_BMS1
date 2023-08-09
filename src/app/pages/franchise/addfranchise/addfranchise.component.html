@@ -1,0 +1,302 @@
+<!-- <div class="col-md-12">
+  <nb-card>
+    <nb-card-header> {{id? 'EDIT':'ADD'}} FRANCHISE </nb-card-header>
+    <nb-card-body>
+      <toaster-container [toasterconfig]></toaster-container>
+      <form [formGroup]="addfranchise" class="form-horizontal" (ngSubmit)="franchisesubmit();">
+
+        <div class="row" class="form-group row">
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white; ">FRANCHISE</nb-card-header>
+              <nb-card-body>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>User Name<span style="color:red;">*</span> </label>
+                    <input type="text" name="user_name" formControlName="user_name" placeholder="User Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.user_name.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','user_name')&&submit" class="form-text error">User Name
+                      is required! </small>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Password<span style="color:red;">*</span></label>
+                    <input type="password" name="password" formControlName="password" placeholder="Password"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.password.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','password')&&submit" class="form-text error">Password is
+                      required! </small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>First Name<span style="color:red;">*</span></label>
+                    <input type="text" name="first_name" formControlName="first_name" placeholder="First Name"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.first_name.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','first_name')&&submit" class="form-text error">First Name is
+                      required! </small>
+                  </div> -->
+
+                  <!-- <div class="col-sm-6"> -->
+
+                    
+                <!-- <div class="col-sm-6">
+                  <label>Business Name <span style="color:red;">*</span></label>
+                  <input type="text" name="bname" formControlName="bname" placeholder="Business Name"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.bname.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','bname')&&submit" class="form-text error">Business Name is
+                    required! </small>
+                </div> -->
+                 
+                  <!-- </div> -->
+                  <!-- <div class="col-sm-6">
+                    <label>Gender<span style="color:red;">*</span></label>
+                    <select formControlName="gender"
+                      [ngClass]="{'form-control':true,'form-control-danger':addfranchise.controls.gender.invalid&&submit}">
+                      <option value="" selected>Select Gender</option>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                      <option value="2">Others</option>
+                    </select>
+                  </div> -->
+
+                  <!-- <div class="col-sm-6">
+                    <label>Status <span style="color:red;">*</span></label>
+                    <select formControlName="status"
+                      [ngClass]="{'form-control':true,'form-control-danger':addfranchise.controls.status.invalid&&submit}">
+                      <option value="" selected>Select Status</option>
+                      <option value="1">Active</option>
+                      <option value="2">Inactive</option>
+                    </select>
+                 </div>
+
+                    <div class="col-sm-6">
+                  <label>Amount<span style="color:red;">*</span></label>
+                  <input type="text" name="amount" formControlName="amount" placeholder="Amount"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.amount.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','amount')&&submit" class="form-text error">Amount is
+                    required! </small>
+                </div>
+
+                <div class="col-sm-6">
+                  <label>Mobile NO<span style="color:red;">*</span></label>
+                  <input type="number" name="mobile" formControlName="mobile" placeholder="Mobile No"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.mobile.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','mobile')&&submit" class="form-text error">Mobile  No is
+                    required! </small>
+                </div>
+                </div>
+
+              
+              -->
+              <!-- </nb-card-body>
+            </nb-card>
+          </div>
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">DETAILS</nb-card-header>
+              <nb-card-body>
+                
+                <div class="form-group row">
+                  
+                <div class="col-sm-6">
+                  <label>Share Type <span style="color:red;">*</span></label>
+                  <select formControlName="share"
+                    [ngClass]="{'form-control':true,'form-control-danger':addfranchise.controls.share.invalid&&submit}">
+                    <option value="" selected>Select Share</option>
+                    <option value="1">Bulk</option>
+                    <option value="2">Deposit</option>
+                  </select>                  
+                </div>
+
+                  <div class="col-sm-6">
+                    <label>Circle<span style="color:red;">*</span></label>
+                    <select formControlName="circle"
+                      [ngClass]="{'form-control':true,'form-control-danger':addfranchise.controls.circle.invalid&&submit}">
+                      <option value="" selected>Select Circle</option>
+                      <option value="1">Tamil Nadu</option>
+                      <option value="2">kerala</option>
+                    </select>          
+                  </div>
+         
+                  <div class="col-sm-6">
+                    <label>State <span style="color:red;">*</span></label>
+                    <select formControlName="state"
+                      [ngClass]="{'form-control':true,'form-control-danger':addfranchise.controls.state.invalid&&submit}">
+                      <option value="" selected>Select state</option>
+                      <option value="1">Chennai</option>
+                      <option value="2">Tiruchendur</option>
+                    </select>
+                 </div>
+
+
+                   <div class="col-sm-6">
+                    <label>Pincode<span style="color:red;">*</span></label>
+                    <input type="text" name="pincode" formControlName="pincode" placeholder="Pincode"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.pincode.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','pincode')&&submit" class="form-text error">Pincode is
+                      required! </small>
+                  </div>
+ 
+                   <div class="col-sm-6">
+                    <label>Pan NO<span style="color:red;">*</span></label>
+                    <input type="text" name="Pan" formControlName="Pan" placeholder="Pan NO"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.Pan.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','Pan')&&submit" class="form-text error">Pan No is
+                      required! </small>
+                  </div>
+               
+                <div class="col-sm-6">
+                  <label>Service Tax<span style="color:red;">*</span></label>
+                  <input type="text" name="service" formControlName="service" placeholder="service"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.service.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','service')&&submit" class="form-text error">Service Tax  No is
+                    required! </small>
+                </div>
+                
+
+               
+                <div class="col-sm-12">
+                <label>Address<span style="color:red;">*</span></label>
+                <input type="text" name="address" formControlName="address" placeholder="Address"
+                [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.address.invalid&&submit}" />
+              <small *ngIf="addfranchise.hasError('required','address')&&submit" class="form-text error">Address is
+                required! </small>
+                </div>
+
+                </div>
+                
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">SHARE</nb-card-header>
+              <nb-card-body>
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>Business Share <span style="color:red;">*</span></label>
+                    <input type="number" name="b_share" formControlName="b_share" placeholder="Business Share"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.b_share.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','b_share')&&submit" class="form-text error">Business Share
+                      number is required! </small>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Distributed Share <span style="color:red;">*</span></label>
+                    <input type="text" name="d_share" formControlName="d_share" placeholder="Distributed Share"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.d_share.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','d_share')&&submit" class="form-text error">Distributed share is
+                      required! </small>
+                  </div>
+
+                </div>
+                
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>Sub Distributed Share <span style="color:red;">*</span></label>
+                    <input type="text" name="sd_share" formControlName="sd_share" placeholder="Sub Distributed Share"
+                      [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.sd_share.invalid&&submit}" />
+                    <small *ngIf="addfranchise.hasError('required','sd_share')&&submit" class="form-text error"> Sub Distributed share is
+                      required! </small>
+                  </div>
+
+
+             
+                    <div class="col-sm-6">
+                      <label>Reseller Share<span style="color:red;">*</span></label>
+                      <input type="text" name="r_share" formControlName="r_share" placeholder="Reseller Share"
+                        [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.r_share.invalid&&submit}" />
+                      <small *ngIf="addfranchise.hasError('required','r_share')&&submit" class="form-text error">Reseller Share is
+                        required! </small>
+                    </div>
+         
+
+                </div>
+
+
+
+
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+
+          
+          <div class="col-md-6">
+            <nb-card status="info">
+              <nb-card-header style="background-color :  #2a72be;color: white;">GST DETAILS</nb-card-header>
+              <nb-card-body>
+                <div class="form-group row">
+                    <div class="col-sm-6" >
+                  <label>GST NO<span style="color:red;">*</span></label>
+                  <input type="text" name="gstno" formControlName="gstno" placeholder="GST NO"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.gstno.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','gstno')&&submit" class="form-text error">GST  No is
+                    required! </small>
+                </div>
+               
+                   <div class="col-sm-6">
+                    <label>CGST<span style="color:red;">*</span></label>
+                    <input type="text" name="cgst" formControlName="cgst" placeholder="CGST"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.cgst.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','cgst')&&submit" class="form-text error">CGST is
+                    required! </small>
+                  </div>
+
+
+
+                </div>
+                
+                <div class="form-group row">
+                  
+                  <div class="col-sm-6">
+                    <label>SGST<span style="color:red;">*</span></label>
+                    <input type="text" name="sgst" formControlName="sgst" placeholder="SGST"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.sgst.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','sgst')&&submit" class="form-text error">SGST is
+                    required! </small>
+                  </div>
+ -->
+
+             
+                   <!-- <div class="col-sm-6">
+                    <label>IGST<span style="color:red;">*</span></label>
+                    <input type="text" name="igst" formControlName="igst" placeholder="IGST"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.igst.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','igst')&&submit" class="form-text error">IGST is
+                    required! </small>
+                  </div>
+         
+<div class="col-sm-6">
+                  <label>HSN NO<span style="color:red;">*</span></label>
+                  <input type="text" name="hsn" formControlName="hsn" placeholder="HSN NO"
+                    [ngClass]="{'form-control' : true,'form-control-danger':addfranchise.controls.hsn.invalid&&submit}" />
+                  <small *ngIf="addfranchise.hasError('required','hsn')&&submit" class="form-text error">HSN  No is
+                    required! </small>
+                </div>
+                </div>
+
+
+
+
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-md btn-success"> Submit </button> -->
+          <!-- <button class="btn btn-md btn-danger" [routerLink]="['/pages/administration/list-adminuser']">Back</button> -->
+       
+<!--        
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div> -->

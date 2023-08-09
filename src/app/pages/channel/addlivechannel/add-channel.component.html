@@ -1,0 +1,148 @@
+<div class="col-md-12">
+   <nb-card>
+      <nb-card-header>{{item ? 'Edit': 'Add'}} Live Channel</nb-card-header>
+      <nb-card-body >
+         <toaster-container [toasterconfig]="config"></toaster-container>
+         <form [formGroup]="addchannelform" class="form-horizontal" (ngSubmit)="add();">
+            <div class="row">
+               <div class="col-md-6">
+                  <nb-card status="info">
+                     <nb-card-header style="background-color :  #2a72be;color: white;
+                        ">CHANNEL FEATURES</nb-card-header>
+                     <nb-card-body>
+                        <div class="form-group row">
+                           <div class="col-sm-12" >
+                              <label>Channel Name<span style="color:red;">*</span></label>
+                              <input type="text" name="channel_name" formControlName="channel_name" placeholder="Enter your Channel Name"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':addchannelform.controls.channel_name.invalid&&submit}" />
+                              <small *ngIf="addchannelform.controls.channel_name.invalid&&submit" class="form-text error"> Channel name is
+                              required! </small>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                          
+                           <div class="col-sm-12">
+                              <label>Channel LCN</label>
+                              <input type="text" name="channel_lcn" formControlName="channel_lcn" placeholder="LCN Number"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':addchannelform.controls.channel_lcn.invalid&&submit}" />
+                              <small *ngIf="addchannelform.controls.channel_lcn.invalid&&submit" class="form-text error"> Order is
+                              required! </small>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <div class="col-sm-12">
+                              <label>Streaming URL</label>
+                              <input type="text" name="live_url" formControlName="live_url" placeholder="Enter your Streaming URL"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':addchannelform.controls.live_url.invalid&&submit}" />
+                              <small *ngIf="addchannelform.controls.live_url.invalid&&submit" class="form-text error"> Subject is
+                              required! </small>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <div class="col-sm-6">
+                              <label>Channel Type<span style="color:red;">*</span></label>
+                              <select formControlName="channel_type" 
+                              [ngClass]="{'form-control':true,'form-control-danger':addchannelform.controls.channel_type.invalid&&submit}">
+                              <option value="" select>Select Channel Type</option>
+                              <option value="1">FTA</option>
+                              <option value="2">PAY</option>
+                              <option value="3">Local</option>
+                           </select>
+                              <small *ngIf="addchannelform.controls.channel_type.invalid&&submit" class="form-text error"> Program List is
+                              required! </small>
+                           </div>
+                           <div class="col-sm-6">
+                              <label>Channel Mode </label>
+                              <select formControlName="channel_mode" 
+                                 [ngClass]="{'form-control':true,'form-control-danger':addchannelform.controls.channel_mode.invalid&&submit}">
+                                 <option value="" select>Select Channel Mode</option>
+                                 <option value="1">Standard Definition</option>
+                                 <option value="2">High Definition</option>
+                              </select>
+                              <small *ngIf="addchannelform.controls.channel_mode.invalid&&submit" class="form-text eror">Select Channel Definition</small>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                        
+                           <div class="col-sm-6" >
+                              <label>Language</label>
+                              <select formControlName="lang_id" (change)="listgenre();"
+                                 [ngClass]="{'form-control':true,'form-control-danger':addchannelform.controls.lang_id.invalid&&submit}">
+                                 <option value="" selected>Select Language</option>
+                                 <option *ngFor="let item of langlistdata" [ngValue]="item.lang_id">{{item.language_name}}</option>
+                              </select>
+                              <small *ngIf="addchannelform.controls.lang_id.invalid&&submit" class="form-text eror">Select Required Language! </small>
+   
+                           </div>
+                           <div class="col-sm-6" >
+                              <label>Genre</label>
+                              <select formControlName="genre_id" 
+                                 [ngClass]="{'form-control':true,'form-control-danger':addchannelform.controls.genre_id.invalid&&submit}">
+                                 <option value="" selected>Select Channel Genre</option>
+                                 <option *ngFor="let item of genredata" [ngValue]="item.genre_id">{{item.genre_name}}</option>
+   
+                              </select>
+                              <small *ngIf="addchannelform.controls.genre_id.invalid&&submit" class="form-text eror">Select Required Genre!</small>
+   
+                           </div>
+                         </div>
+                     </nb-card-body>
+                  </nb-card>
+                  </div>
+                  <div class="col-md-6">
+                     <nb-card status="info">
+                        <nb-card-header style="background-color :  #2a72be;color: white;
+                           ">ESSENTIALS</nb-card-header>
+                        <nb-card-body>
+                           <div class="form-group row">
+                              <div class="col-sm-12" >
+                                 <label>Image URL</label>
+                                 <input type="text" formControlName="clogo" placeholder="Upload URL"
+                                    [ngClass]="{'form-control':true,'form-control-danger':addchannelform.controls.clogo.invalid&&submit}"
+                                    />
+                                 <small *ngIf="addchannelform.hasError('required','clogo')&&submit"
+                                    class="form-text error">Image URL
+                                 should be uploaded!</small>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-12">
+                                 <label>Description</label>
+                                 <input type="text" name="desc" formControlName="desc" class="form-control" />
+                                
+                              </div>
+                           </div>
+                           <!-- <div class="form-group row">
+                              <div class="col-sm-12">
+                                 <label>Top Channel <span style="color:red;">*</span></label>
+                                 <select name="top_chnl" formControlName="top_chnl"
+                                    [ngClass]="{'form-control' : true,'form-control-danger':addchannelform.controls.top_chnl.invalid&&submit}">
+                                    <option value="" selected> Select your Top Channel</option>
+                                    <option value="0">Yes</option>
+                                    <option value="1">No</option>
+                                 </select>
+                              </div>
+                           </div> -->
+                           <div class="form-group row">
+                              <div class="col-sm-12">
+                                 <label>Status<span style="color:red;">*</span></label>
+                                 <select name="status" formControlName="status"
+                                    [ngClass]="{'form-control' : true,'form-control-danger':addchannelform.controls.status.invalid&&submit}">
+                                    <option value=""> Select your Status</option>
+                                    <option value="0">InActive</option>
+                                    <option value="1">Active</option>
+                                 </select>
+                              </div>
+                           </div>
+                        </nb-card-body>
+                     </nb-card>
+                  </div>
+               </div>
+            <div class="modal-footer">
+               <button type="submit" class="btn btn-md btn-success">{{id ? 'Update':'Submit'}}</button>
+               <button class="btn btn-md btn-danger " [routerLink]="['/pages/complaint/list-comp']">Back</button>
+            </div>
+            </form>
+      </nb-card-body>
+   </nb-card>
+   </div>

@@ -1,0 +1,62 @@
+/*
+ .layout-bg{
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/net2.jpg');
+    display: block;
+    width: 100%;
+   min-width: 100vw;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: table;
+    text-align: center;
+
+}*/
+
+[_nghost-c3] {
+ max-width: 100% !important;   
+}
+
+.img-container{
+    text-align: center;
+}
+
+form.form-horizontal{
+    align-items: center;
+    max-width: 370px;
+    margin: auto;
+}
+
+  .layout-subs{
+  height: 100%;
+  vertical-align: middle;
+  width: 100%;
+  padding: 20px;
+  box-shadow:2px 3px 18px 2px #2046a5;
+  }
+/*   
+ .btn-chng:active {
+  background-color:green!important;
+  font-weight:700!important
+} */
+
+
+.btn {
+    font: inherit;
+    border: 1px solid #00695c;
+    color: white;
+    background-color: #00a2e6 ;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+  }
+  
+  .btn:hover,
+  .btn:active {
+    background-color: #00695c;
+    color: white;
+  }
+  

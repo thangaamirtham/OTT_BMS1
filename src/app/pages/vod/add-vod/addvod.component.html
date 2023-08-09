@@ -1,0 +1,112 @@
+<div class="col-md-12">
+  <nb-card>
+    <nb-card-header>{{item ? 'Edit' : 'Add' }}VOD</nb-card-header>
+    <nb-card-body>
+      <toaster-container [toasterconfig]="config"></toaster-container>
+      <form [formGroup]="AddIPForm" class="form-horizontal" (ngSubmit)="addIPPool();">
+               <div class="row">
+            <div class="col-md-6">
+               <nb-card status="info">
+                  <nb-card-header style="background-color :  #2a72be;color: white;
+                     ">CHANNEL FEATURES</nb-card-header>
+                  <nb-card-body>
+                     <div class="form-group row">
+                        <div class="col-sm-12" >
+                           <label>VOD Name<span style="color:red;">*</span></label>
+                           <input type="text" name="vod_name" formControlName="vod_name" placeholder="Enter your VOD Name"
+                              [ngClass]="{'form-control' : true,'form-control-danger':AddIPForm.controls.vod_name.invalid&&submit}" />
+                           <small *ngIf="AddIPForm.controls.vod_name.invalid&&submit" class="form-text error"> VOD name is
+                           required! </small>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                       <div class="col-sm-12" >
+                           <label>Select Channel</label>
+                           <select formControlName="chn_ctgry" 
+                              [ngClass]="{'form-control':true,'form-control-danger':AddIPForm.controls.chn_ctgry.invalid&&submit}">
+                              <option value="" selected>Select Channel</option>
+                           </select>
+                        </div>
+                      </div>
+                        <div class="form-group row">
+                        <div class="col-sm-12">
+                           <label>Streaming URL</label>
+                           <input type="text" name="strm_url" formControlName="strm_url" placeholder="Enter your Streaming URL"
+                              [ngClass]="{'form-control' : true,'form-control-danger':AddIPForm.controls.strm_url.invalid&&submit}" />
+                           <small *ngIf="AddIPForm.controls.strm_url.invalid&&submit" class="form-text error"> Subject is
+                           required! </small>
+                        </div>
+                     </div>
+                       <div class="form-group row">
+                        <div class="col-sm-12" >
+                           <label>Language</label>
+                           <select formControlName="lang" 
+                              [ngClass]="{'form-control':true,'form-control-danger':AddIPForm.controls.lang.invalid&&submit}">
+                              <option value="" selected>Select Language</option>
+                           </select>
+                        </div>
+                      </div>
+                  </nb-card-body>
+               </nb-card>
+               </div>
+               <div class="col-md-6">
+                  <nb-card status="info">
+                     <nb-card-header style="background-color :  #2a72be;color: white;
+                        ">ESSENTIALS</nb-card-header>
+                     <nb-card-body>
+                        
+                         <div class="form-group row">
+                         <div class="col-sm-12">
+                                          <label>Released Date & Timing <span style="color:red;">*</span></label>
+                                          <input type="datetime-local" formControlName="relsd_date"
+                                             placeholder="Released Date & Time "
+                                             [ngClass]="{'form-control' : true,'form-control-danger':AddIPForm.controls.relsd_date.invalid&&submit}" />
+                                          <!-- <owl-date-time #Exp></owl-date-time> -->
+                                          <small *ngIf="AddIPForm.controls.relsd_date.invalid&&submit" class="form-text error">Released
+                                              Date & Time is required! </small>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                           <div class="col-sm-12" >
+                              <label>Image Upload</label>
+                              <input type="file" formControlName="img_up" placeholder="Upload Proof"
+                                 [ngClass]="{'form-control':true,'form-control-danger':AddIPForm.controls.img_up.invalid&&submit}"
+                                 />
+                              <small *ngIf="AddIPForm.hasError('required','img_up')&&submit"
+                                 class="form-text error">Image Proof
+                              should be uploaded!</small>
+                           </div>
+                        </div>
+                          <div class="form-group row">
+                           <div class="col-sm-12">
+                              <label>Status<span style="color:red;">*</span></label>
+                              <select name="status" formControlName="status"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddIPForm.controls.status.invalid&&submit}">
+                                 <option value="" selected> Select your Status</option>
+                                 <option value="0">Active</option>
+                                 <option value="1">Inactive</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <div class="col-sm-12">
+                              <label>Description</label>
+                              <input type="text" name="desc" formControlName="desc"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddIPForm.controls.desc.invalid&&submit}" />
+                              <small *ngIf="AddIPForm.hasError('required','desc')&&submit" class="form-text error">Description is
+                              required!</small>
+                           </div>
+                        </div>
+                      
+                     </nb-card-body>
+                  </nb-card>
+               </div>
+            </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-md btn-success">{{item ? 'Update': 'Create'}}</button>
+            <button class="btn btn-md btn-danger" [routerLink]="['/pages/vod/vodList']">Back</button>
+          </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

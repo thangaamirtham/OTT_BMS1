@@ -1,0 +1,32 @@
+<div  style="background-color: #2a72be"class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="languageForm" class="form-horizontal" (ngSubmit)="submitfn();">
+  <div class="modal-body">
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label>Language <span style="color:red;">*</span> </label>
+        <input autofocus type="text" name="language_name" formControlName="language_name" placeholder="Language Name"
+          [ngClass]="{'form-control' : true,'form-control-danger':languageForm.controls.language_name.invalid && submit}" />
+        <small *ngIf="languageForm.hasError('required','language_name')&&submit" class="form-text error">Language Name is
+          required!</small>
+          
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-12">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="status" formControlName="status" />
+          <label class="custom-control-label" for="status">Active</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-success">{{item ? 'Update' : 'Add'}}</button>
+    <button type="button" class="btn btn-md btn-danger " (click)='cancel();'>Back</button>
+  </div>
+</form>

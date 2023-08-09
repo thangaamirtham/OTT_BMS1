@@ -1,0 +1,27 @@
+<div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <td class="logo" style="cursor: pointer;" (click)="goToHome()"><img src="/assets/images/gltv.png"
+        style="height: 45px;margin-left: -26px"></td>
+    <td style="    color: white;
+    font-size: 21px;
+    font-weight: bold;
+    margin:-12px;
+    white-space: nowrap;"><span style="color:  #f6e072"> GOLDENLEAF TV </span> </td>
+  </div>
+  <ngx-theme-switcher></ngx-theme-switcher>
+</div>
+<div class="header-container">
+  <toaster-container [toasterconfig]="config"> </toaster-container>
+  <!-- <ngx-layout-direction-switcher></ngx-layout-direction-switcher> -->
+  <nb-actions>
+    <nb-action style="margin-right: 10px;">
+      <i  class="control-icon ion ion-ios-search" (click)="search()"></i>
+    </nb-action>
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user style="cursor: pointer;" [nbContextMenu]="userMenu" [name]="user?.name" [picture]></nb-user>
+    </nb-action>
+    <!-- <nb-action class="control-item" disabled icon="nb-notifications"></nb-action> -->
+    <!-- <nb-action class="control-item" icon="nb-email"></nb-action> -->
+  </nb-actions>
+</div>

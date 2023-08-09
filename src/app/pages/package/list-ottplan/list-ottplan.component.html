@@ -1,0 +1,146 @@
+<nb-card>
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+  <nb-card-header>List OTT
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i
+        class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]="config"></toaster-container>
+    <button *ngIf="role.getroleid()>=775" class="btn btn-sm btn-success"
+      [routerLink]="['/pages/package/add-ott']">Add</button>
+    <hr style="border: 0px;">
+    <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>OTT PlanName</label>
+          <auto-completen [(ngModel)]="ottplan_name" addclass="form-control" optValues="ottplan_name"
+            placeholder='Select OTTPlanName' (keyUp)="showOTTPlanName($event)" optId="ottplanid" [item]="ottplanname">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>OTT PlanCode</label>
+          <auto-completen [(ngModel)]="ottplan_code" addclass="form-control" optValues="ottplancode"
+            placeholder='Select OTTPlanCode' (keyUp)="showOTTPlanCode($event)" optId="ottplanid" [item]="ottplandata">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Tax Type</label>
+          <select [(ngModel)]="taxtype" class="form-control">
+            <option value="" selected>Select Connection status</option>
+            <option value="0">Inclusive</option>
+            <option value="1">Exclusive</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Status</label>
+          <select [(ngModel)]="status" class="form-control">
+            <option value="" selected>Select status</option>
+            <option value="1">Enable</option>
+            <option value="0">Disable</option>
+          </select>
+        </div>
+      </div>
+      <div class="formm-group row">
+        <div class="col-sm-3">
+          <label>Days</label>
+          <select [(ngModel)]="days" class="form-control">
+            <option value="" selected>Select Days</option>
+            <option value="30">30 Days</option>
+            <option value="365">365 Days</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Vendor</label>
+          <select [(ngModel)]="ott_vendor" class="form-control">
+            <option value="" selected>Select Vendor</option>
+            <option value="1">M2MIT</option>
+            <option value="2">PlayBox</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+     <label class="left">
+      <h5>Total Count : {{total}}</h5>
+    </label>
+    <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+    <div class="table-wrapper">
+    <table class="table table-striped table-bordered" id="myTable">
+      <tr class="bg-secondary">
+        <!-- <th *ngIf="role.getmenurole(1030)">Action</th> -->
+        <th>Action</th>
+        <th>ID</th>
+        <th>OTT Plan Name</th>
+        <th>OTT PlanCode</th>
+        <th>Tax Type</th>
+        <th>Time Unit</th>
+        <th>Amount</th>
+        <th>OTTPlatform</th>
+        <th>Vendor</th>
+        <th>Status</th>
+      </tr>
+      <tr  *ngFor="let item of pagedItems">
+        <!-- <td *ngIf="!role.getmenurole(1030)"> <a [routerLink]="['/pages/administration/ott-auth']"
+            [queryParams]='{id: item.ottid}' style="cursor: pointer;color: black;"><i class="nb-edit"></i> Edit</a>
+        </td> -->
+        <td> <a [routerLink]="['/pages/package/add-ott']" [queryParams]='{id: item.ottplanid}'
+            style="cursor: pointer;color: black;">
+            <!-- <i class="nb-edit"></i> Edit -->
+            <i class="nb-edit" style="font-size:24px"></i>
+          </a>
+        </td>
+        <td>{{item.ottplanid}}</td>
+        <td>{{item.ottplan_name}}</td>
+        <td>{{item.ottplancode}}</td>
+        <td>{{item.otttaxtype == 0? 'Inclusive':'Exclusive'}}</td>
+        <td>{{item.dayormonth == 1 ? item.days +" "+ "Days": item.days +" "+ "Months"}}</td>
+        <td><i class="fas fa-rupee-sign">&nbsp;{{item.ottamount}}</i></td>
+        <!-- <td style="font-size: medium;font-weight: 900;cursor: pointer;"><a
+            (click)="ottcount(item.ottplanid)">{{item.tot}}</a></td> -->
+        <td style="text-align:left;">{{ item.platforms}}</td>
+        <!-- <td>{{item.status==1 ? 'Enable':'Disable'}}</td> -->
+        <td>{{item.ott_vendor == 1 ? 'M2MIT': item.ott_vendor == 2? 'PlayBox': '--'}}</td>
+        <td style="text-align: center;"> <a [ngStyle]="{'color' :item.status==1 ? 'green' : 'red' }"
+          [ngClass]="{'ion-close-round':item.status!=1? true:false,'ion-checkmark-round': item.status==1 ? true:false  }">
+        </a> </td>
+      </tr>
+      <tr>
+        <td colspan="4" *ngIf="pagedItems==''">NO DATA FOUND</td>
+      </tr>
+    </table>
+    </div>
+    <br>
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>

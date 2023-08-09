@@ -1,0 +1,24 @@
+<nb-card>
+  <nb-card-header>List Language Category</nb-card-header>
+  <nb-card-body>
+    <toaster-container></toaster-container>
+    <div class="row" style="padding-left: 10px;">
+      <div style="padding: 2px;">
+        <button  class="btn btn-sm btn-success" (click)='Addcat()'>Add</button>
+      </div>
+    </div>
+    <hr style="border: 0px;">
+    <table class="table table-hover table-striped">
+      <tr  style="background-color :  #2a72be;color:white;font-size: medium;">
+        <th >Action</th>
+        <th>Language</th>
+        <th>Status</th>
+      </tr>
+      <tr *ngFor="let item of data">
+        <td><a (click)='edit(item);'><i class="nb-edit" style="font-size: 20px;"></i>Edit</a></td>
+        <td>{{item.language_name}}</td>
+        <td>{{item.status== true ?"active":"Inactive"}}</td> 
+    </table>
+    
+     </nb-card-body>
+</nb-card>

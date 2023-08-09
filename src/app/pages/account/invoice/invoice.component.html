@@ -1,0 +1,204 @@
+<nb-card>
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+  <nb-card-header>USER INVOICE <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]></toaster-container>
+    <!-- <button  class="btn btn-sm btn-success"
+      (click)='add()' style="background-color: #2a72be">Add</button> -->
+    <hr style="border: 0px;">
+
+    <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>ProfileID</label>
+          <auto-completen [(ngModel)]="user_data" addclass="form-control" optValues="profileid"
+            placeholder='Select profileID' id="id" (changed)="showMobile();" (keyup)="showUser($event.target.value)"
+            [item]="userData">
+          </auto-completen>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Mobile</label>
+          <auto-completen [(ngModel)]="user_mobile" addclass="form-control" optValues="mobile" placeholder='Select User'
+            id="id" (keyup)="showMobile($event.target.value)" [item]="userMobile">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Ott Activation Status</label>
+          <select class="form-control" [(ngModel)] ="status">
+            <option value="">Select Status</option>
+            <option value="1">Initiated</option>
+            <option value="2">Activated</option>
+            <option value="3">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>Start Date</label>
+          <input type="date" pattern="Start Date" [(ngModel)]="start_date" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label>End Date</label>
+          <input type="date" pattern="End Date" [(ngModel)]="end_date" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label>Seelct Vendor</label>
+          <select class="form-control" [(ngModel)] ="ott_vendor">
+            <option value="">Select Vendor</option>
+            <option value="1">M2MIT</option>
+            <option value="2">PLAYBOX</option>
+           </select>
+        </div>
+      </div>
+      <button type="button" class="btn btn-md btn-success" (click)='initialList();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+    <br>
+
+    
+    <div class="row">
+      <div class="col-md-12">
+        <label>
+          <h5>Total Count: {{count}}</h5>
+        </label>
+        <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="pagination">
+          <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+            <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+            <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+              (click)="getlist(page)">{{page}}</a>
+            <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+            <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+              (click)="page=pager.totalPages;getlist();">Last</a>
+          </ul>
+          <select [(ngModel)]="limit" (change)="initialList()" class="form-control"
+            style="height: calc(2rem + 10px);max-width: 10vh;min-width: 74px;border-radius: 5px;">
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="75">75</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-wrapper">
+      <table class="table table-bordered table-striped" id="myTable">
+        <tr style="background-color :  #2a72be;color:white;font-size: medium; vertical-align:middle !important ;">
+          <th *ngIf="role.getroleid()>777" style="border: 2px solid #fff;color: white; text-align: center;" rowspan="2">Action</th>
+          <th style="border: 2px solid #aeb8b9;color: white; text-align: center;" rowspan="2"  *ngIf="this.role.getroleid()>777">ID</th>
+          <th style="border: 2px solid #aeb8b9;color: white; text-align: center;" colspan="2"  *ngIf="this.role.getroleid()>777">RESELLER</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2">USER</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="4">PACK INFO</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2">RESELELR BALANCE</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">CUSTOMER SUBSCRIPTION</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" colspan="2" >EXPIRYDATE</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">RESPONSE</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">STATUS</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">INVOICE DATE</th>
+          <th style="border: 1px solid #aeb8b9;color: white; text-align: center;" rowspan="2">Pay Status</th>
+
+       
+         </tr>
+         <tr style="background-color :  #2a72be;color:white;">
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;"  *ngIf="this.role.getroleid()>777">TYPE</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;"  *ngIf="this.role.getroleid()>777">BUSINESS</th>
+
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">PROFILEID</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">MOBILE</th>
+
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">GLTV PACKNAME</th>
+           <th style="border: 1px solid #aeb8b9;color: white; text-align: center;">OTT PACKNAME</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">AMOUNT</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">TAX</th>
+
+           
+
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">	BEFORE DEDUCTION</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">DEDUCTED AMOUNT</th>
+
+
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">	GLTV</th>
+           <th style="border: 1px solid #aeb8b9;color: white;text-align: center;">OTT</th>
+           </tr>
+       
+        <tr *ngFor="let item of pagedItems">
+            <td *ngIf="role.getroleid()>=777 && item.ottstatus ==1 && item.mapottid!=0" style="padding: 1px;" class=" last" data-title="'Action'">
+            <div class="dropdown ghost-dropdown" ngbDropdown>
+              <button style="width: 70px;border: 2px solid #73a1ff;font-size: 10px;margin: 3px;"
+                class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action&nbsp;
+              </button>
+              <ul style="width: 75;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
+                <li  class="dropdown-item" title="check" (click)="checkOttStatus(item.iolid)">
+                  <i style="font-size: 20px;" class="fa fa-sync"></i>&nbsp;Check
+                </li>
+              </ul>
+            </div>
+          </td> 
+          <td *ngIf="role.getroleid()>=777 && item.ottstatus ==2">--</td>
+           <td  *ngIf="this.role.getroleid()>777">{{item.iolid}}</td>  
+           <td  *ngIf="this.role.getroleid()>777">{{item.role_type == 1? 'Distributor': item.role_type ==2? 'Sub-Distributor':
+          item.role_type ==3 ? 'Reseller': '--'}}</td>  
+          <td  *ngIf="this.role.getroleid()>777">{{item.manager}}</td> 
+          <td style="text-transform: none !important;">{{item.profileid}}</td> 
+          <td >{{item.mobile || '--'}}</td> 
+           <td >{{item.gltvpakname || '--'}}</td> 
+           <td >{{item.ottpackname || '--'}}</td> 
+           <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.totinvamt}}</td> 
+          <td class="rupee" > <i class="fas fa-rupee-sign" ></i> {{item.totinvtaxamt}}</td>
+          <td class="rupee" ><i class="fas fa-rupee-sign" ></i> {{item.beforedetection}}</td> 
+          <td class="rupee" > <i class="fas fa-rupee-sign" ></i> {{item.detectedamt}}</td>
+          <td  style="white-space:break-spaces">{{item.platforms}}</td>
+          <td >{{item.expirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td> 
+          <td >{{item.ottexpirydate | date: 'dd MMM yyyy hh:mm:ss'}}</td>
+          <td *ngIf="item.res_msg">
+            <p (click)="response(item)">
+            <!-- <i class="fa fa-envelope" placement="top" popoverClass="style:background: aliceblue;
+            font-size: 150%;"
+              ngbPopover="{{item.res_msg?item.res_msg:'--'}}">
+            </i> -->
+<i class="fa fa-envelope" placement="top" popoverClass="style:background: aliceblue;
+            font-size: 150%;">
+            </i>    
+          </p>
+          </td> 
+          <td *ngIf="!item.res_msg">
+             --
+          </td> 
+          <td >{{item.ottstatus==1?'processing':item.ottstatus==2?'Activated':'Cancelled'}}</td> 
+          <td>{{(item.cdate | date:'d MMM y h:mm:ss a')}}</td>
+          <td>{{item.pay_status == 1 ? 'Un-Paid' : 'Paid'}}</td>
+        </tr>
+       
+      </table>
+      </div>
+   
+      <div class="pagination">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+          <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+          <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+            (click)="getlist(page)">{{page}}</a>
+          <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+          <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+            (click)="page=pager.totalPages;getlist();">Last</a>
+        </ul>
+      </div>
+   
+  </nb-card-body>
+</nb-card>

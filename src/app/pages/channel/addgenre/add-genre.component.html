@@ -1,0 +1,44 @@
+<div style="background-color: #2a72be"class="modal-header">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="genreForm" class="form-horizontal" (ngSubmit)="add();">
+  <div class="modal-body">
+    <!-- <toaster-container [toasterconfig]></toaster-container> -->
+<div class="form-group row">
+      <div class="col-sm-12">
+        <label>Language <span style="color:red;">*</span> </label>
+        <select name="lang_id" formControlName="lang_id" 
+        [ngClass]="{'form-control' : true,'form-control-danger':genreForm.controls.lang_id.invalid&&submit}">
+        <option value="" selected>Select Language</option>
+        <option *ngFor="let item of langlistdata" [ngValue]="item.lang_id">{{item.language_name}}</option>
+       </select>
+        <small *ngIf="genreForm.hasError('required','lang_id')&&submit" class="form-text error">Select Required Language!
+          </small>
+      </div>
+    </div>
+      <div class="form-group row">
+            <div class="col-sm-12">
+        <label>Genre <span style="color:red;">*</span> </label>
+        <input type="text" name="genre_name" formControlName="genre_name" placeholder="Genre "
+          [ngClass]="{'form-control' : true,'form-control-danger':genreForm.controls.genre_name.invalid&&submit}" />
+        <small *ngIf="genreForm.hasError('required','genre_name')&&submit" class="form-text error">Genre Name is
+          required!</small>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-12">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="status" formControlName="status" />
+          <label class="custom-control-label" for="status">Active</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-success">{{item ? 'Update' : 'Add'}}</button>
+    <button type="button" class="btn btn-md btn-danger " (click)='cancel();'>Back</button>
+  </div>
+</form>

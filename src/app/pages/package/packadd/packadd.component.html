@@ -1,0 +1,125 @@
+<div class="col-md-12">
+   <nb-card>
+      <nb-card-header>Add Package</nb-card-header>
+      <nb-card-body>
+         <toaster-container [toasterconfig]="config"> </toaster-container>
+         <form [formGroup]="AddPackageForm" class="form-horizontal" (ngSubmit)="addService();">
+            <div class="modal-body">
+               <ngb-tabset [destroyOnHide]="false">
+                  <ngb-tab title="Package Details">
+                     <ng-template ngbTabContent>
+
+                        <div class="form-group row">
+                           <div class="col-sm-6">
+                              <label>Package Name<span style="color:red;">*</span></label>
+                              <input type="text" name="packname" formControlName="packname"
+                                 placeholder="Package Name"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.packname.invalid&&submit}" />
+                              <small *ngIf="AddPackageForm.controls.packname.invalid&&submit" class="form-text error">
+                                 Package name is
+                                 required! </small>
+                           </div>
+                           <!-- <div class="col-sm-6">
+                              <label>Service Tax <span style="color:red;">*</span></label>
+                              <select name="serv_tax" formControlName="serv_tax"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.serv_tax.invalid&&submit}">
+                                 <option value="" selected> Select your Service Tax</option>
+                                 <option value="0">Yes</option>
+                                 <option value="1">No</option>
+                              </select>
+                           </div> -->
+                           <div class="col-sm-6">
+                              <label>Circle Name </label>
+                              <select formControlName="cid"
+                                 [ngClass]="{'form-control':true,'form-control-danger':AddPackageForm.controls.cid.invalid&&submit}">
+                                 <option value="" select>Select Tax Calculation Type Type</option>
+                                 <option value="1">Including Tax</option>
+                                 <option value="2">Excluding Tax</option>
+                              </select>
+                              <small *ngIf="AddPackageForm.controls.cid.invalid&&submit"
+                                 class="form-text eror">Select Tax Calculation Type </small>
+                           </div>
+                           <div class="col-sm-6">
+                              <label>Tax Calculation Type </label>
+                              <select formControlName="tax_type"
+                                 [ngClass]="{'form-control':true,'form-control-danger':AddPackageForm.controls.tax_type.invalid&&submit}">
+                                 <option value="" select>Select Tax Calculation Type Type</option>
+                                 <option value="1">Including Tax</option>
+                                 <option value="2">Excluding Tax</option>
+                              </select>
+                              <small *ngIf="AddPackageForm.controls.tax_type.invalid&&submit"
+                                 class="form-text eror">Select Tax Calculation Type </small>
+                           </div>
+                        </div>
+                        <!-- <div class="form-group row">
+                           <div class="col-sm-6">
+                              <label>Tax Calculation Type </label>
+                              <select formControlName="tx_typ"
+                                 [ngClass]="{'form-control':true,'form-control-danger':AddPackageForm.controls.tx_typ.invalid&&submit}">
+                                 <option value="" select>Select Tax Calculation Type Type</option>
+                                 <option value="1">Including Tax</option>
+                                 <option value="2">Excluding Tax</option>
+                              </select>
+                              <small *ngIf="AddPackageForm.controls.tx_typ.invalid&&submit"
+                                 class="form-text eror">Select Tax Calculation Type </small>
+                           </div> -->
+                           <!-- <div class="col-sm-6">
+                              <label>Ala Carte Package<span style="color:red;">*</span></label>
+                              <select name="alacrt_pck" formControlName="alacrt_pck"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.alacrt_pck.invalid&&submit}">
+                                 <option value="" selected> Select your Ala Carte Package</option>
+                                 <option value="0">Yes</option>
+                                 <option value="1">No</option>
+                              </select>
+                           </div> -->
+                        <!-- </div> -->
+                        <div class="form-group row">
+                           <div class="col-sm-6">
+                              <label>Package Price</label>
+                              <input type="text" name="amt" formControlName="amt"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.amt.invalid&&submit}" />
+                              <small *ngIf="AddPackageForm.hasError('required','amt')&&submit"
+                                 class="form-text error">Package Amount is
+                                 required!</small>
+                           </div>
+                           <div class="col-sm-6">
+                              <label>Status<span style="color:red;">*</span></label>
+                              <select name="status" formControlName="status"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.status.invalid&&submit}">
+                                 <option value="" selected> Select your Status</option>
+                                 <option value="0">Active</option>
+                                 <option value="1">Inactive</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <div class="col-sm-6">
+                              <label>Description</label>
+                              <input type="text" name="desc" formControlName="desc"
+                                 [ngClass]="{'form-control' : true,'form-control-danger':AddPackageForm.controls.desc.invalid&&submit}" />
+                              <small *ngIf="AddPackageForm.hasError('required','desc')&&submit"
+                                 class="form-text error">Description is
+                                 required!</small>
+                           </div>
+                           </div>
+                     </ng-template>
+                  </ngb-tab>
+  
+                  <ngb-tab title="Add Channels">
+                     <ng-template ngbTabContent>
+                     <div style="padding-left: 5%;">
+                         <tree-root #tree [nodes]="nodes" [options]="options"></tree-root>
+                     </div>
+                  </ng-template>
+                  </ngb-tab>
+                  
+               </ngb-tabset>
+            </div>
+            <div class="modal-footer">
+               <button type="submit" class="btn btn-md btn-success">Add</button>
+               <button type="submit" class="btn btn-md btn-danger " (click)='cancel()'>Back </button>
+            </div>
+         </form>
+      </nb-card-body>
+   </nb-card>
+</div>

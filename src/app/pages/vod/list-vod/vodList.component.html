@@ -1,0 +1,107 @@
+<nb-card>
+  <nb-card-header>List VOD<a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;
+    background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;"
+      (click)="search=!search;"><i class="fa fa-search"></i></a>
+      <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;background-color: #2a72be;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+        (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]></toaster-container>
+    <button  class="btn btn-sm btn-success" [routerLink]="['/pages/vod/addvod']" style="background-color: #2a72be">Add</button>
+    <hr style="border: 0px;">
+    <!-- <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3" *ngIf="role.getroleid()>777">
+          <label>Business Name</label>
+          <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
+            (changed)="showGroupName();showGroupNas();showIppoolName()" placeholder='Select Business' id="bus_name"
+            [item]="bus">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3" *ngIf="role.getroleid()>=775">
+          <label>Circle</label>
+          <auto-completen [(ngModel)]="group_name" (changed)="showGroupNas();showIppoolName()"
+          addclass="form-control" optValues="groupname" placeholder='Select Group' optId="groupid" [item]="group1">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Nas Name</label>
+          <auto-completen [(ngModel)]="nas_name" (changed)="showIppoolName()"
+          addclass="form-control" optValues="shortname" placeholder='Select Nas' id="nasid" [item]="nas1">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Pool Name</label>
+          <auto-completen [(ngModel)]="ippool_name" addclass="form-control" optValues="name" placeholder='Select Nas'
+            id="poolid" [item]="ippool1">
+          </auto-completen>
+        </div>
+      </div>
+      <button type="button" class="btn btn-md btn-success" (click)='page=1;initiallist();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+    <label>
+      <h5>Total Count: {{count}}</h5>
+    </label>
+    <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i> -->
+    <!-- <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div> -->
+    <table class="table table-hover table-striped">
+      <tr style="background-color :  #00d2e5;color:white;font-size: medium;">
+        <th >Action</th>
+        <th >VOD name</th>
+        <th >Channel name</th>
+        <th>Streaming URL</th>
+        <th>Status</th>
+      </tr>
+      <tr *ngFor="let item of pagedItems">
+        <td > <a [routerLink]="['/pages/ippool/editippool']" [queryParams]='{id: item.id}' style="cursor: pointer;color: black;"><i class="nb-edit"></i>Edit</a></td>
+        <td >{{item.busname}}</td>
+        <td >{{item.groupname}}</td>
+        <td>{{item.shortname}}</td>
+       
+        <td>{{item.descr}}</td>
+      </tr>
+      <tr>
+        <td colspan="9" *ngIf="pagedItems==''">NO DATA FOUND</td>
+      </tr>
+    </table>
+     <!-- <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div> -->
+    <!-- <ul *ngIf="data.length" class="pagination">
+      <li >
+          <a>First</a>
+      </li>
+      <li >
+          <a>Previous</a>
+      </li>
+      <li *ngFor="let page of pages" [ngClass]="{active:page === page}">
+          <a>{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:page === totalpage}">
+          <a>Next</a>
+      </li>
+      <li [ngClass]="{disabled:page === totalpage}">
+          <a>Last</a>
+      </li>
+    </ul> -->
+  </nb-card-body>
+</nb-card>

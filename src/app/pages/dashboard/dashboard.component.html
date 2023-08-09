@@ -1,0 +1,384 @@
+<ngx-loading [show]="loading"
+  [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+</ngx-loading>
+<!-- <div class="row"
+ >
+  <div class="col-md-3" *ngFor="let statusCard of statusCards">
+    <ngx-status-card [ID]='statusCard.status' (clicked)='listsubs($event)' [title]="statusCard.title"
+      [type]="statusCard.type" [value]="statusCard.value">
+      <i [ngClass]="statusCard.iconClass"></i>
+    </ngx-status-card>
+  </div>
+</div> -->
+
+
+
+<div class="row" *ngIf="role.getroleid() <= 777">
+  <div class="col-md-3">
+    <ngx-flip-card></ngx-flip-card>
+  </div>
+  <!-- <div class="col-md-9" >
+    <div class="row">
+      <div class="col-sm-4" *ngFor="let statusCard of statusCards">
+        <ngx-status-card [ID]='statusCard.status' (clicked)='listsubs($event)' [title]="statusCard.title"
+          [type]="statusCard.type" [value]="statusCard.value">
+          <i [ngClass]="statusCard.iconClass"></i>
+        </ngx-status-card>
+      </div>
+    </div>
+  </div> -->
+</div>
+
+<div class="row" *ngIf="role.getroleid() > 777">
+  <div class="col-md-3" *ngFor="let statusCard of statusCards">
+    <ngx-status-card [ID]='statusCard.status' (clicked)='listsubs($event)' [title]="statusCard.title"
+      [type]="statusCard.type" [value]="statusCard.value">
+      <i [ngClass]="statusCard.iconClass"></i>
+    </ngx-status-card>
+  </div>
+</div>
+<br><br><br>
+<div class="row">
+  <div class="col-md-8">
+    <nb-card style="height: 452px;">
+      <!-- <nb-card-header style="background-color: #01a7ee;color: white;">Expiry Details -->
+        <nb-card-header class="bg-gradient">Expiry Details
+        <!-- <i (click)="expiryDetails()" class="green right fa fa-file-excel fa-2x" aria-hidden="true"></i> -->
+      </nb-card-header>
+      <nb-card-body>
+        <nb-tabset (changeTab)="dayexpiryDetails($event)">
+          <!-- /*Yesterday*/ -->
+          <nb-tab badgeText={{tot1}} badgeStatus="danger" tabTitle="Yesterday" style="height: 287px;">
+            <table class="table table-hover table-striped" style=" overflow: auto;">
+              <tr>
+                <th style="text-align: center;">Action</th>
+                <th>Reseller Name</th>
+                <th>Subscriber Name</th>
+                <th>Profile ID</th>
+                <th>Mobile</th>
+                <th>OttPlancode</th>
+                <th>Time</th>
+              </tr>
+              <tr *ngFor="let item of pagedItemsyest">
+                <td style=" padding: 1px;" class=" last" data-title="'Action'">
+                  <div class="dropdown ghost-dropdown" ngbDropdown>
+                    <button style="width: 70px;font-size: 10px;color:white"
+                      class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action
+                    </button>
+                    <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                      <!-- <li class="dropdown-item" *ngIf="(item.acc_type!=3 && (!role.getmenurole(705)))" title="Renew"
+                        (click)="renew_user(item.sub_id,item.mrole,item.c_date,item.expiration)"><i
+                          style="font-size: 10px;" class="ion-reply "></i>&nbsp;Renewal</li> -->
+                      <li class="dropdown-item" title="View" (click)="view_user(item.id)"><i
+                          style="font-size: 10px;" class="far fa-eye "></i>&nbsp;View
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <!-- <td *ngIf="role.getroleid()>=775">{{item.mrole==444 ? 'Bulk Reseller':item.mrole == 333 ? 'Deposit Reseller':item.mrole==666?'Sub ISP Bulk':
+                  item.mrole==555 ? 'Sub ISP Deposit':item.mrole==551 ? 'Sub Distributor Deposit':item.mrole==661 ? 'Sub Distributor Bulk':'Hotel'}}</td> -->
+                <td>{{item.bname || '--'}}</td>
+                <td>{{item.fullname}}</td>
+                <td>{{(item.profileid )}}</td>
+                <td>{{item.mobile}}</td>
+                <td>{{item.ottplancode}}</td>
+                <td>{{item.ottexpirydate| date : ' h:mm:ss a'}}</td>
+              </tr>
+            </table>
+            <div class="row">
+              <div class="pagination" [hidden]='pageryest.totalPages == 1'>
+                <ul *ngIf="pageryest.pages && pageryest.pages.length" class="pagination">
+                  <a [ngClass]="{disabled:pageryest.currentPage === 1}" (click)="getExpiryDetails(0,1);">First</a>
+                  <a [ngClass]="{disabled:pageryest.currentPage === 1}"
+                    (click)="getExpiryDetails(0,pageyest-1);">Previous</a>
+                  <a *ngFor="let page of pageryest.pages" [ngClass]="{active:pageryest.currentPage === page}"
+                    (click)="getExpiryDetails(0,page);">{{page}}</a>
+                  <a [ngClass]="{disabled:pageryest.currentPage === pageryest.totalPages}"
+                    (click)="getExpiryDetails(0,pageyest+1);">Next</a>
+                  <a [ngClass]="{disabled:pageryest.currentPage === pageryest.totalPages}"
+                    (click)="getExpiryDetails(0,pageryest.totalPages);">Last</a>
+                </ul>
+              </div>
+
+              <!-- <div class="col-md-2" *ngIf="pagedItemsyest.length >1">
+                <button type="button" class="btn btn-md btn-success" (click)="listExpiryCust(1)">More</button>
+              </div> -->
+            </div>
+
+          </nb-tab>
+          <!-- /*Today*/ -->
+          <nb-tab badgeText={{tot2}} badgeStatus="danger" tabTitle="Today" active style="height: 287px;">
+            <table class="table table-hover table-striped" style=" overflow: auto;">
+              <tr>
+                <th style="text-align: center;">Action</th>
+                <th>Reseller Name</th>
+                <th>Subscriber Name</th>
+                <th>Profile ID</th>
+                <th>Mobile Number</th>
+                <th>OttPlancode</th>
+                <th>Time</th>
+               </tr>
+              <tr *ngFor="let item of pagedItemtoday">
+                <td style=" padding: 1px;text-align: center;" class=" last" data-title="'Action'">
+                  <div class="dropdown ghost-dropdown" ngbDropdown>
+                    <button style="width: 70px;color:white;font-size: 10px;"
+                      class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action
+                    </button>
+                    <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                      <!-- <li class="dropdown-item" *ngIf="(item.acc_type!=3 && (!role.getmenurole(705)))" title="Renew"
+                        (click)="renew_user(item.sub_id,item.mrole,item.c_date,item.expiration)"><i
+                          style="font-size: 20px;" class="ion-reply "></i>&nbsp;Renewal</li> -->
+                      <li class="dropdown-item" title="View" (click)="view_user(item.id)"><i
+                          style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <!-- <td *ngIf="role.getroleid()>=775">{{item.mrole==444 ? 'Bulk Reseller':item.mrole==333 ? 'Deposit Reseller':item.mrole==666?'Sub
+                  ISP Bulk'
+                  :item.mrole==555 ? 'Sub ISP Deposit':item.mrole==551 ? 'Sub Distributor Deposit':item.mrole==661
+                  ? 'Sub
+                  Distributor Bulk':'Hotel'}}</td> -->
+                  <td>{{item.bname || '--'}}</td>
+                  <td>{{item.fullname}}</td>
+                  <td>{{(item.profileid )}}</td>
+                  <td>{{item.mobile}}</td>
+                  <td>{{item.ottplancode}}</td>
+                  <td>{{item.ottexpirydate| date : ' h:mm:ss a'}}</td>
+
+              </tr>
+            </table>
+            <div class="row">
+              <div class="pagination" [hidden]='pagertod.totalPages == 1'>
+                <ul *ngIf="pagertod.pages && pagertod.pages.length" class="pagination">
+                  <a [ngClass]="{disabled:pagertod.currentPage === 1}"
+                    (click)="pagetom=1;getExpiryDetails(1,1);">First</a>
+                  <a [ngClass]="{disabled:pagertod.currentPage === 1}"
+                    (click)="getExpiryDetails(1,pagetom-1);">Previous</a>
+                  <a *ngFor="let page of pagertod.pages" [ngClass]="{active:pagertod.currentPage === page}"
+                    (click)="getExpiryDetails(1,page);">{{page}}</a>
+                  <a [ngClass]="{disabled:pagertod.currentPage === pagertod.totalPages}"
+                    (click)="getExpiryDetails(1,pagetom+1);">Next</a>
+                  <a [ngClass]="{disabled:pagertod.currentPage === pagertod.totalPages}"
+                    (click)="getExpiryDetails(1,pagertod.totalPages);">Last</a>
+                </ul>
+              </div>
+              <!-- <div class="col-md-2" *ngIf="pagedItemtoday.length >1">
+                <button type="button" class="btn btn-md btn-success" (click)="listExpiryCust(2)">More</button>
+              </div> -->
+            </div>
+          </nb-tab>
+          <!-- /*Tomorrow*/ -->
+          <nb-tab badgeText={{tot3}} badgeStatus="danger" tabTitle="Tomorrow" style="height: 287px;">
+            <table class="table table-hover table-striped" style=" overflow: auto;">
+              <tr>
+                <th style="text-align: center;">Action</th>
+                <th>Reseller Name</th>
+                <th>Subscriber Name</th>
+                <th>Profile ID</th>
+                <th>Mobile Number</th>
+                <th>OttPlancode</th>
+                <th>Time</th>
+               </tr>
+              <tr *ngFor="let item of pagedItemtom">
+                <td style="padding: 1px;" class=" last" data-title="'Action'">
+                  <div class="dropdown ghost-dropdown" ngbDropdown>
+                    <button style="width: 75px;color:white;font-size: 10px"
+                      class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action
+                    </button>
+                    <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                      <!-- <li class="dropdown-item" *ngIf="(item.acc_type!=3 && (!role.getmenurole(705)))" title="Renew"
+                        (click)="renew_user(item.sub_id,item.mrole,item.c_date,item.expiration)"><i
+                          style="font-size: 20px;" class="ion-reply "></i>&nbsp;Renewal</li> -->
+                      <li class="dropdown-item" title="View" (click)="view_user(item.id)"><i
+                          style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <!-- <td *ngIf="role.getroleid()>=775">{{item.mrole==444 ? 'Bulk Reseller':item.mrole==333 ? 'Deposit Reseller':item.mrole==666?'Sub
+                  ISP Bulk'
+                  :item.mrole==555 ? 'Sub ISP Deposit':item.mrole==551 ? 'Sub Distributor Deposit':item.mrole==661
+                  ? 'Sub
+                  Distributor Bulk':'Hotel'}}</td> -->
+                  <td>{{item.bname || '--'}}</td>
+                  <td>{{item.fullname}}</td>
+                  <td>{{(item.profileid )}}</td>
+                  <td>{{item.mobile}}</td>
+                  <td>{{item.ottplancode}}</td>
+                  <td>{{item.ottexpirydate| date : ' h:mm:ss a'}}</td>
+
+              </tr>
+            </table>
+            <div class="row">
+              <div class="pagination" [hidden]='pagertom.totalPages == 1 '>
+                <ul *ngIf="pagertom.pages && pagertom.pages.length" class="pagination">
+                  <a [ngClass]="{disabled:pagertom.currentPage === 1}" (click)="getExpiryDetails(2,1);">First</a>
+                  <a [ngClass]="{disabled:pagertom.currentPage === 1}"
+                    (click)="getExpiryDetails(2,pageytmr-1);">Previous</a>
+                  <a *ngFor="let page of pagertom.pages" [ngClass]="{active:pagertom.currentPage === page}"
+                    (click)="getExpiryDetails(2,page);">{{page}}</a>
+                  <a [ngClass]="{disabled:pagertom.currentPage === pagertom.totalPages}"
+                    (click)="getExpiryDetails(2,pageytmr+1);">Next</a>
+                  <a [ngClass]="{disabled:pagertom.currentPage === pagertom.totalPages}"
+                    (click)="getExpiryDetails(2,pagertom.totalPages);">Last</a>
+                </ul>
+              </div>
+              <!-- <div class="col-md-2" *ngIf="pagedItemtom.length>1">
+                <button type="button" class="btn btn-md btn-success" (click)="listExpiryCust(3)">More</button>
+              </div> -->
+            </div>
+          </nb-tab>
+          <!-- /*Day after Tomorrow8? -->
+          <nb-tab badgeText={{tot4}} badgeStatus="danger" tabTitle={{dayafter}} style="height: 287px;">
+            <table class="table table-hover table-striped" style=" overflow: auto;">
+              <tr>
+                <th style="text-align: center;">Action</th>
+                <th>Reseller name</th>
+                <th>Subscriber Name</th>
+                <th>Profile ID</th>
+                <th>Mobile Number</th>
+                <th>OttPlancode</th>
+                <th>Time</th>
+               </tr>
+              <tr *ngFor="let item of pagedItemdft">
+                <td style="padding: 1px" class=" last" data-title="'Action'">
+                  <div class="dropdown ghost-dropdown" ngbDropdown>
+                    <button style="width: 75px;color:white;font-size: 10px"
+                      class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action
+                    </button>
+                    <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                      <!-- <li class="dropdown-item" *ngIf="(item.acc_type!=3 && (!role.getmenurole(705)))" title="Renew"
+                        (click)="renew_user(item.sub_id,item.mrole,item.c_date,item.expiration)"><i
+                          style="font-size: 20px;" class="ion-reply "></i>&nbsp;Renewal</li> -->
+                      <li class="dropdown-item" title="View" (click)="view_user(item.id)"><i
+                          style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <!-- <td *ngIf="role.getroleid()>=775">{{item.mrole==444 ? 'Bulk Reseller':item.mrole==333 ? 'Deposit Reseller':item.mrole==666?'Sub
+                  ISP Bulk'
+                  :item.mrole==555 ? 'Sub ISP Deposit':item.mrole==551 ? 'Sub Distributor Deposit':item.mrole==661
+                  ? 'Sub
+                  Distributor Bulk':'Hotel'}}</td> -->
+                  <td>{{item.bname || '--'}}</td>
+                  <td>{{item.fullname}}</td>
+                  <td>{{(item.profileid )}}</td>
+                  <td>{{item.mobile}}</td>
+                  <td>{{item.ottplancode}}</td>
+                  <td>{{item.ottexpirydate| date : ' h:mm:ss a'}}</td>
+              </tr>
+            </table>
+            <div class="row">
+              <div class="pagination" [hidden]='pagerdayafttmr.totalPages == 1 '>
+                <ul *ngIf="pagerdayafttmr.pages && pagerdayafttmr.pages.length" class="pagination">
+                  <a [ngClass]="{disabled:pagerdayafttmr.currentPage === 1}"
+                    (click)="pagedataftertmr=1;getExpiryDetails(3,1);">First</a>
+                  <a [ngClass]="{disabled:pagerdayafttmr.currentPage === 1}"
+                    (click)="getExpiryDetails(3,pagedataftertmr-1);">Previous</a>
+                  <a *ngFor="let page of pagerdayafttmr.pages" [ngClass]="{active:pagerdayafttmr.currentPage === page}"
+                    (click)="getExpiryDetails(3,page);">{{page}}</a>
+                  <a [ngClass]="{disabled:pagerdayafttmr.currentPage === pagerdayafttmr.totalPages}"
+                    (click)="getExpiryDetails(3,pagedataftertmr+1);">Next</a>
+                  <a [ngClass]="{disabled:pagerdayafttmr.currentPage === pagerdayafttmr.totalPages}"
+                    (click)="getExpiryDetails(3,pagerdayafttmr.totalPages);">Last</a>
+                </ul>
+              </div>
+              <!-- <div class="col-md-2" *ngIf="pagedItemdft.length>1">
+                <button type="button" class="btn btn-md btn-success" (click)="listExpiryCust(4)">More</button>
+              </div> -->
+            </div>
+            <!-- </ng-template>
+              </ngb-tab> -->
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <!-- <div class="col-md-6" *ngIf="!role.getmenurole(94)">
+    <ngx-barcharts></ngx-barcharts>
+  </div> -->
+</div>
+
+<!--  -->
+<!-- </ng-template>
+              </ngb-tab> -->
+
+<!-- <div class="col-md-6" >
+    <ngx-barcharts></ngx-barcharts>
+  </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row">
+  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
+    <ngx-temperature></ngx-temperature>
+  </div>
+  
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+    <ngx-electricity></ngx-electricity>
+  </div>
+  </div>
+  
+  <div class="row">
+  <div class="col-xxxl-9 col-xl-12">
+    <ngx-rooms></ngx-rooms>
+  </div>
+  
+  <div class="col-xxxl-3 col-xxl-4 col-lg-7 col-md-6">
+    <ngx-contacts></ngx-contacts>
+  </div>
+  
+  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
+    <ngx-solar [chartValue]="solarValue"></ngx-solar>
+  
+    <ngx-kitten></ngx-kitten>
+  </div>
+  
+  <div class="col-xxxl-3 col-xxl-4 col-md-5">
+    <ngx-traffic></ngx-traffic>
+    <ngx-weather></ngx-weather>
+  </div>
+  
+  <div class="col-xxxl-6 col-xxl-12 col-md-7">
+    <ngx-security-cameras></ngx-security-cameras>
+  </div>
+  </div> -->

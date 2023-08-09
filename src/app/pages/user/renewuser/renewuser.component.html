@@ -1,0 +1,143 @@
+<div class="modal-header" style="background-color: #ba7fec;">
+  <span>{{ modalHeader }}</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+  <form [formGroup]="RenewSubsForm" (ngSubmit)="renewSubmit()">
+    <div class="form-group row">
+      <div class="col-sm-6">
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label>Select Package <span style="color:red;">*</span></label>
+            <auto-completen
+              [addclass]="{'form-control' : true,'form-control-danger':RenewSubsForm.controls.planid.invalid&&submit}"
+              (keyUp)="packsrv($event)" (changed)="getOttName()" formControlName="planid" optValues="packs" placeholder='Select Service' id="id"
+              [item]="pack">
+            </auto-completen>
+            <small *ngIf="RenewSubsForm.controls.planid.invalid&&submit" class="form-text error">Package is
+              Required!</small>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label>Payment status</label>
+            <select formControlName="pay_status"
+              [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.pay_status.invalid&&submit}">
+              <option value="" selected>Select Payment Status</option>
+              <option value="2">Paid</option>
+              <option value="1">Unpaid</option>
+            </select>
+
+            <!-- <select formControlName="pay_status" (change)="RenewSubsForm.controls.pay_amt.setValue('');"
+            [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.pay_status.invalid&&submit}">
+            <option value="" selected>Select Payment Status</option>
+            <option value="2">Paid</option>
+            <option value="1">Unpaid</option>
+          </select> -->
+          </div>
+        </div>
+
+
+        <!-- <div class="form-group row">
+          <div class="col-sm-12" *ngIf="RenewSubsForm.value['pay_status']=='2'">
+            <label>Amount</label>
+            <input type="textarea" formControlName="pay_amt"
+              [ngClass]="{'form-control' : true,'form-control-danger':RenewSubsForm.controls.pay_amt.invalid&&submit}" />
+            <small *ngIf="RenewSubsForm.controls.pay_amt.invalid&&submit" class="form-text error">Amount Is
+              Required!</small>
+          </div>
+        </div> -->
+
+        <!-- <div class="form-group row">
+          <div class="col-sm-12" *ngIf="RenewSubsForm.value['pay_status']=='2'">
+            <label>Paid Date </label>
+            <input type="datetime-local" formControlName="pay_date" placeholder="Paid Date"
+              [ngClass]="{'form-control' : true,'form-control-danger':RenewSubsForm.controls.pay_date.invalid&&submit}" />
+            <small *ngIf="RenewSubsForm.controls.pay_date.invalid&&submit" class="form-text error"> Date is
+              required! </small>
+          </div>
+        </div> -->
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label>Comments</label>
+            <textarea formControlName="comment" placeholder="Comments"
+              [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.comment.invalid&&submit}"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <div class="col-sm-12">
+           
+
+
+            <div class="col-md-12" *ngIf="RenewSubsForm.value['planid']" style="font-weight:800;padding:12px;overflow-y:scroll;height:362px;">
+              <div class="table-wrapper">
+                <table class="table table-bordered table-striped">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">RENEWAL SUMMARY</th>
+                    </tr>
+                    <tr>
+                      <td>Invoice Amount</td>
+                      <th>{{ottAmount? (ottAmount | currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                    <tr>
+                      <td>Tax Amount</td>
+                      <th>{{ottTaxAmount? (ottTaxAmount| currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                    <tr>
+                      <td>Total Amount</td>
+                      <th>{{ottTotal? (ottTotal | currency: 'INR': 'symbol'):0 }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-bordered table-striped"  *ngIf="ottPlanDetails">
+                  <tbody>
+                    <tr>
+                      <th>OTT PLATFORMS</th>
+                    </tr>
+                    <tr *ngFor="let item of ottPlatforms">
+                      <td>{{item}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-sm-3" *ngIf="RenewSubsForm.value['pay_status']=='2'">
+        <label>Paid Date </label>
+        <input type="datetime-local" formControlName="pay_date" placeholder="Paid Date"
+          [ngClass]="{'form-control' : true,'form-control-danger':RenewSubsForm.controls.pay_date.invalid&&submit}" />
+        <small *ngIf="RenewSubsForm.controls.pay_date.invalid&&submit" class="form-text error"> Date is
+          required! </small>
+      </div>
+      <div class="col-sm-6">
+        <label>Comments</label>
+        <textarea formControlName="comment" placeholder="Comments"
+          [ngClass]="{'form-control':true,'form-control-danger':RenewSubsForm.controls.comment.invalid&&submit}"></textarea>
+      </div>
+    </div> -->
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-sm btn-success">Renewal</button>
+    </div>
+
+  </form>
+
+</div>
